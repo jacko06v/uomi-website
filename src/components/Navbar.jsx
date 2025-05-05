@@ -1,0 +1,639 @@
+import React, { useState, useEffect } from "react";
+import { ChevronDown, Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+// App & Infrastructure - replaces 📱export const AppIcon = () => (
+
+export const AppIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="5" y="2" width="14" height="20" rx="3" stroke="currentColor" strokeWidth="1.5" />
+  <circle cx="12" cy="18" r="1.5" stroke="currentColor" />
+  <path d="M10 5.5H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added subtle details */}
+  <path d="M8 9h8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+  <path d="M8 12h8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+</svg>
+);
+
+export const BriefcaseIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M12 11V16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M8 12H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added subtle details */}
+  <path d="M3 11h18" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.4" />
+</svg>
+);
+
+export const PortalIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M21 8V16C21 19.3137 18.3137 22 15 22H9C5.68629 22 3 19.3137 3 16V8C3 4.68629 5.68629 2 9 2H15C18.3137 2 21 4.68629 21 8Z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M9 16.5L15 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M15 16.5L9 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added subtle details */}
+  <path d="M21 8.5H3" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.4" />
+</svg>
+);
+
+export const DocumentIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 3C4.89543 3 4 3.89543 4 5V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V9L14 3H6Z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M14 3V9H20" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M8 13H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M8 17H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added subtle details */}
+  <path d="M8 10h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+</svg>
+);
+
+export const DiscordIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {/* Improved overall shape */}
+  <path d="M19.5 5.5c-1.2-0.55-2.4-0.9-3.5-1.1a0.15 0.15 0 0 0-.16.07c-.1.18-.21.42-.29.61a14.53 14.53 0 0 0-4.37 0 10.1 10.1 0 0 0-.3-.61 0.15 0.15 0 0 0-.16-.07c-1.1.2-2.3.55-3.5 1.1a0.14 0.14 0 0 0-.07.06C4.3 9.32 3.7 13.05 4.1 16.75c.01.02.03.04.05.05 1.2.9 2.4 1.45 3.55 1.8a0.15 0.15 0 0 0 .16-.05c.45-.62.85-1.27 1.19-1.96a0.14 0.14 0 0 0-.08-.2 9.9 9.9 0 0 1-1.41-.67.15.15 0 0 1-.02-.24c.1-.07.19-.15.28-.22a0.14 0.14 0 0 1 .15-.02c2.39 1.09 4.97 1.09 7.3 0a0.14 0.14 0 0 1 .16.01c.1.07.18.16.28.23.06.05.06.17-.01.24-.45.34-.92.54-1.4.67a0.15 0.15 0 0 0-.08.2c.35.69.75 1.34 1.18 1.95a0.15 0.15 0 0 0 .16.05c1.17-.35 2.36-.9 3.56-1.8a0.15 0.15 0 0 0 .05-.05c.48-4.23-.8-7.88-3.38-11.2a0.12 0.12 0 0 0-.06-.05z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M9 11.5C9 12.3284 8.55228 13 8 13C7.44772 13 7 12.3284 7 11.5C7 10.6716 7.44772 10 8 10C8.55228 10 9 10.6716 9 11.5Z" fill="currentColor" />
+  <path d="M17 11.5C17 12.3284 16.5523 13 16 13C15.4477 13 15 12.3284 15 11.5C15 10.6716 15.4477 10 16 10C16.5523 10 17 10.6716 17 11.5Z" fill="currentColor" />
+</svg>
+);
+
+export const XIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {/* Simplified and improved */}
+  <path d="M17.1761 3H20.3037L13.5642 10.6731L21.5 21H15.0993L10.0765 14.8901L4.30439 21H1.17398L8.35239 12.7533L0.75 3H7.31779L11.8606 8.58303L17.1761 3Z" fill="currentColor" />
+</svg>
+);
+
+export const BrainIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {/* Improved brain shape */}
+  <path d="M12 17C12 17 7.5 16.5 6 13C4.5 9.5 7.5 7 8.5 6C9.5 5 10 3 12 3C14 3 14.5 5 15.5 6C16.5 7 19.5 9.5 18 13C16.5 16.5 12 17 12 17Z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M12 17V21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M10 20H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M9 10C9.55228 10 10 9.55228 10 9C10 8.44772 9.55228 8 9 8C8.44772 8 8 8.44772 8 9C8 9.55228 8.44772 10 9 10Z" fill="currentColor" />
+  <path d="M15 10C15.5523 10 16 9.55228 16 9C16 8.44772 15.5523 8 15 8C14.4477 8 14 8.44772 14 9C14 9.55228 14.4477 10 15 10Z" fill="currentColor" />
+  {/* Added subtle details */}
+  <path d="M10 13C10.5 13.5 11.5 14 12 14C12.5 14 13.5 13.5 14 13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+</svg>
+);
+
+export const WhitepaperIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {/* Added scroll details */}
+  <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M7 7H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M7 11H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M7 15H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added scroll ends */}
+  <path d="M19 3C19 3 19 2 18 2H6C5 2 5 3 5 3" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+  <path d="M19 21C19 21 19 22 18 22H6C5 22 5 21 5 21" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+</svg>
+);
+
+export const DeterminismIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12Z" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M15 9L18 6M18 6V9.5M18 6H14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M9 15L6 18M6 18V14.5M6 18H9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  {/* Added subtle rotation indicator */}
+  <path d="M12 7.5C13.3807 7.5 14.5 8.61929 14.5 10" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeDasharray="1,1" />
+  <path d="M12 16.5C10.6193 16.5 9.5 15.3807 9.5 14" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeDasharray="1,1" />
+</svg>
+);
+
+export const BlogIcon = () => (
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+  <path d="M7 7H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M7 11H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  <path d="M7 15H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  {/* Added newspaper details */}
+  <path d="M15 11H17" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+  <path d="M12 15H17" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+</svg>
+);
+
+const menuItems = {
+  Ecosystem: {
+    sections: [
+      {
+        title: "Explore",
+        items: [
+          { icon: <AppIcon />, label: "Apps & Infrastructure", link: "/ecosystem" },
+        //   {
+        //     icon: <BriefcaseIcon />,
+        //     label: "Ecosystem Careers",
+        //     link: "/ecosystem/careers",
+        //   },
+        ],
+      },
+      {
+        title: "Builder Programs",
+        items: [
+          {
+            label: "evm/accathon",
+            description: "The premier hackathon for innovative EVM developers.",
+            link: "#",
+            comingSoon: true
+          },
+          {
+            label: "UOMI Grants",
+            description:
+              "Pitch your startup to win cash prizes, VC funding and marketing.",
+            link: "#",
+            comingSoon: true
+          },
+        ],
+      },
+    ],
+    ctaBox: "Building a project on UOMI? Get in touch!",
+    ctaLink: "/ecosystem/contact",
+  },
+  Developers: {
+    sections: [
+      {
+        title: "Developer Resources",
+        items: [
+          { icon: <PortalIcon />, label: "Developer Portal", link: "/docs" },
+          { icon: <DocumentIcon />, label: "Documentation", link: "https://docs.uomi.ai" },
+        ],
+      },
+      {
+        title: "Developer Socials",
+        items: [
+          {
+            icon: <DiscordIcon />,
+            label: "Developer Discord",
+            link: "https://discord.gg/RV5DUpjsdY",
+          },
+          { icon: <XIcon />, label: "Developer X", link: "https://x.com/uomiNetwork" },
+        ],
+      },
+    ],
+  },
+  Resources: {
+    sections: [
+      {
+        title: "About",
+        items: [
+          { icon: <BrainIcon />, label: "Consensus", link: "/consensus" },
+          { icon: <WhitepaperIcon />, label: "Whitepaper", link: "/whitepaper" },
+          {
+            icon: <DeterminismIcon />,
+            label: "Deterministic indeterminism",
+            link: "/deterministc-indeterminism",
+          },
+          { icon: <BlogIcon />, label: "Blog", link: "/blog" },
+        ],
+      },
+      {
+        title: "Socials",
+        items: [
+          { icon: <XIcon />, label: "UOMI X", link: "https://x.com/UomiNetwork" },
+          {
+            icon: <DiscordIcon />,
+            label: "Community Discord",
+            link: "https://discord.gg/RV5DUpjsdY",
+          },
+        ],
+      },
+      {
+        title: "The Foundation",
+        description:
+          "The UOMI Foundation is dedicated to the growth and adoption of the UOMI protocol's ecosystem.",
+        link: "/resources/foundation",
+      },
+    ],
+  },
+};
+
+const Navbar = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Initialize dark mode from system preference
+  useEffect(() => {
+    setIsDarkMode(true); // Default to dark mode
+  }, []);
+
+  // Click outside handler to close menus
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setActiveMenu(null);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  // Handle dropdown click
+  const handleDropdownClick = (e, menuName) => {
+    e.stopPropagation();
+    setActiveMenu(activeMenu === menuName ? null : menuName);
+  };
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((prev) => !prev);
+  };
+
+  // Styles based on theme
+  const themeStyles = {
+    bg: "bg-black",
+    text: "text-white",
+    textSecondary: "text-gray-300",
+    border: "border-zinc-800",
+    dropdown: "bg-zinc-900 border-zinc-800",
+    hover: "hover:bg-zinc-800",
+  };
+
+  return (
+    <div className={"dark"}>
+      <header
+        className={`w-full border-b transition-colors duration-300 ${themeStyles.bg} ${themeStyles.border} ${themeStyles.text}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center">
+              <a href="/">
+                <img
+                  src="http://localhost:5174/UOMI.svg"
+                  alt="UOMI Logo"
+                  className="h-8 w-auto"
+                  style={{ filter: "invert(1)" }}
+                />
+              </a>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              {Object.keys(menuItems).map((menuName) => (
+                <div className="relative" key={menuName}>
+                  <button
+                    onClick={(e) => handleDropdownClick(e, menuName)}
+                    className={`flex items-center gap-1.5 py-2 transition-colors duration-200 font-medium ${
+                      activeMenu === menuName
+                        ? "text-[#dffe00]"
+                        : `${themeStyles.text} hover:text-[#dffe00]`
+                    }`}
+                  >
+                    {menuName}
+                    <motion.div
+                      animate={{ rotate: activeMenu === menuName ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </motion.div>
+                  </button>
+
+                  <AnimatePresence>
+                    {activeMenu === menuName && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.15 }}
+                        className={`absolute left-1/2 transform -translate-x-1/2 mt-2 rounded-xl border shadow-lg ${themeStyles.dropdown} z-50`}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          minWidth: "280px",
+                          boxShadow: isDarkMode
+                            ? "0 10px 25px -5px rgba(223,254,0,0.25)"
+                            : "0 10px 25px -5px rgba(0,0,0,0.1)",
+                        }}
+                      >
+                        {menuName === "Ecosystem" ? (
+                          <div className="grid grid-cols-2 gap-6 p-6 min-w-[560px]">
+                            {/* Left Column */}
+                            <div className="space-y-6">
+                              {/* Explore Section */}
+                              <div>
+                                <h3 className="font-semibold text-[#dffe00] mb-3">
+                                  Explore
+                                </h3>
+                                <ul className="space-y-2">
+                                  {menuItems[menuName].sections[0].items.map(
+                                    (item, i) => (
+                                      <motion.li
+                                        key={i}
+                                        className="flex items-start gap-2.5 group cursor-pointer"
+                                        whileHover={{ x: 3 }}
+                                      >
+                                        <a
+                                          href={item.link}
+                                          className="flex items-start gap-2.5 group cursor-pointer"
+                                        >
+                                          <span className="text-lg">
+                                            {item.icon}
+                                          </span>
+                                          <span
+                                            className={
+                                              themeStyles.text +
+                                              " group-hover:text-[#dffe00]"
+                                            }
+                                          >
+                                            {item.label}
+                                          </span>
+                                        </a>
+                                      </motion.li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+
+                              {/* CTA Box */}
+                              <div
+                                className={`bg-zinc-800 border-zinc-700 border rounded-lg p-4 font-medium text-sm mt-auto`}
+                              >
+                                <a
+                                  href={menuItems[menuName].ctaLink}
+                                  className="hover:text-[#dffe00]"
+                                >
+                                  {menuItems[menuName].ctaBox}
+                                </a>
+                              </div>
+                            </div>
+
+                            {/* Right Column */}
+                            <div className="space-y-6">
+                              {/* Builder Programs Section */}
+                              <div>
+                                <h3 className="font-semibold text-[#dffe00] mb-3">
+                                  Builder Programs
+                                </h3>
+                                <ul className="space-y-3">
+                                  {menuItems[menuName].sections[1].items.map(
+                                    (item, i) => (
+                                      <motion.li
+                                        key={i}
+                                        className="group cursor-pointer"
+                                        whileHover={{ x: 3 }}
+                                      >
+                                        <a href={item.link} className="block">
+                                          <div className="flex items-center gap-2">
+                                            <div
+                                              className={`${themeStyles.text} font-medium group-hover:text-[#dffe00]`}
+                                            >
+                                              {item.label}
+                                            </div>
+                                            {item.comingSoon && (
+                                              <span className="text-xs bg-zinc-700 text-[#dffe00] px-2 py-0.5 rounded-full">
+                                                coming soon
+                                              </span>
+                                            )}
+                                          </div>
+                                          <p
+                                            className={`text-sm ${themeStyles.textSecondary}`}
+                                          >
+                                            {item.description}
+                                          </p>
+                                        </a>
+                                      </motion.li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="p-6 flex flex-row gap-12 min-w-[600px]">
+                            {menuItems[menuName].sections.map(
+                              (section, idx) => (
+                                <div key={idx} className="space-y-3">
+                                  {section.title && (
+                                    <h3 className="font-semibold text-[#dffe00]">
+                                      {section.title}
+                                    </h3>
+                                  )}
+
+                                  {section.items && (
+                                    <ul className="space-y-2">
+                                      {section.items.map((item, i) => (
+                                        <motion.li
+                                          key={i}
+                                          className="flex items-start gap-2.5 group cursor-pointer"
+                                          whileHover={{ x: 3 }}
+                                        >
+                                          <a
+                                            href={item.link}
+                                            className="flex items-start gap-2.5"
+                                          >
+                                            {item.icon && (
+                                              <span className="text-lg">
+                                                {item.icon}
+                                              </span>
+                                            )}
+                                            <span
+                                              className={
+                                                themeStyles.text +
+                                                " group-hover:text-[#dffe00]"
+                                              }
+                                            >
+                                              {item.label}
+                                            </span>
+                                          </a>
+                                        </motion.li>
+                                      ))}
+                                    </ul>
+                                  )}
+
+                                  {section.description && (
+                                    <div className="space-y-1">
+                                      <h4
+                                        className={`font-semibold ${themeStyles.text}`}
+                                      >
+                                        {section.title}
+                                      </h4>
+                                      <a
+                                        href={section.link}
+                                        className="block hover:text-[#dffe00]"
+                                      >
+                                        <p
+                                          className={`text-sm ${themeStyles.textSecondary}`}
+                                        >
+                                          {section.description}
+                                        </p>
+                                      </a>
+                                    </div>
+                                  )}
+                                </div>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </nav>
+
+            {/* Right Side Controls */}
+            <div className="flex items-center gap-4">
+              {/* CTA Button */}
+              <motion.a
+                href="https://app.uomi.ai/"
+                className="hidden sm:block bg-[#dffe00] text-black px-5 py-2 rounded-full font-semibold shadow-md"
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: "#c8e500",
+                }}
+                whileTap={{ scale: 0.95 }}
+
+              >
+                Join Testnet
+              </motion.a>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 rounded-full"
+                onClick={toggleMobileMenu}
+                aria-label="Toggle mobile menu"
+              >
+                <Menu className={`w-6 h-6 ${themeStyles.text}`} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`md:hidden overflow-hidden ${themeStyles.bg} border-t ${themeStyles.border}`}
+            >
+              <div className="px-4 py-2 divide-y divide-gray-700">
+                {Object.keys(menuItems).map((menuName) => (
+                  <div key={menuName} className="py-3">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownClick(e, menuName);
+                      }}
+                      className={`flex items-center justify-between w-full py-2 ${themeStyles.text} font-medium`}
+                    >
+                      {menuName}
+                      <motion.div
+                        animate={{ rotate: activeMenu === menuName ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </motion.div>
+                    </button>
+
+                    <AnimatePresence>
+                      {activeMenu === menuName && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-4 overflow-hidden mt-1"
+                        >
+                          {menuItems[menuName].sections.map((section, idx) => (
+                            <div key={idx} className="py-2">
+                              {section.title && (
+                                <h3 className="font-medium text-sm text-[#dffe00] mb-2">
+                                  {section.title}
+                                </h3>
+                              )}
+
+                              {section.items && (
+                                <ul className="space-y-2">
+                                  {section.items.map((item, i) => (
+                                    <li key={i} className="py-1">
+                                      <a
+                                        href={item.link}
+                                        className="flex gap-2.5 items-start hover:text-[#dffe00]"
+                                      >
+                                        {item.icon && (
+                                          <span className="text-lg">
+                                            {item.icon}
+                                          </span>
+                                        )}
+                                        <div>
+                                          <span
+                                            className={`font-medium text-sm ${themeStyles.text}`}
+                                          >
+                                            {item.label}
+                                          </span>
+                                          {item.description && (
+                                            <p
+                                              className={`text-xs ${themeStyles.textSecondary}`}
+                                            >
+                                              {item.description}
+                                            </p>
+                                          )}
+                                        </div>
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+
+                              {section.description && (
+                                <div className="mt-1">
+                                  <a
+                                    href={section.link}
+                                    className="block hover:text-[#dffe00]"
+                                  >
+                                    <p
+                                      className={`text-sm ${themeStyles.textSecondary}`}
+                                    >
+                                      {section.description}
+                                    </p>
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+
+                          {menuName === "Ecosystem" &&
+                            menuItems[menuName].ctaBox && (
+                              <div
+                                className={`bg-zinc-800 rounded-lg p-3 text-sm my-3`}
+                              >
+                                <a
+                                  href={menuItems[menuName].ctaLink}
+                                  className="block hover:text-[#dffe00]"
+                                >
+                                  {menuItems[menuName].ctaBox}
+                                </a>
+                              </div>
+                            )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+
+                {/* Mobile CTA Button */}
+                <div className="py-4">
+                  <motion.a
+                    href="/testnet"
+                    className="block w-full text-center bg-[#dffe00] text-black py-2.5 rounded-full font-semibold"
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Join Testnet
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </div>
+  );
+};
+
+export default Navbar;
