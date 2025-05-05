@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="col-span-2 mb-6 md:mb-0 md:col-span-2">
               <div className="flex items-center gap-2 mb-4 md:mb-6">
                 <img
-                  src="http://localhost:5174/UOMI.svg"
+                  src="https://uomi-new.vercel.app/UOMI.svg"
                   alt="UOMI Logo"
                   className="h-8 md:h-10 w-auto"
                   style={{ filter: "invert(1)" }}

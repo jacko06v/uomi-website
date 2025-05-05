@@ -263,7 +263,7 @@ const Navbar = () => {
             <div className="flex items-center">
               <a href="/">
                 <img
-                  src="http://localhost:5174/UOMI.svg"
+                  src="https://uomi-new.vercel.app/UOMI.svg"
                   alt="UOMI Logo"
                   className="h-8 w-auto"
                   style={{ filter: "invert(1)" }}
