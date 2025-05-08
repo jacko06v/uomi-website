@@ -112,6 +112,23 @@ export const BlogIcon = () => (
 </svg>
 );
 
+export const ChainIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* First chain link */}
+      <path d="M9 7H7.8C6.11984 7 4.76575 8.35409 4.76575 10.0342C4.76575 11.7144 6.11984 13.0685 7.8 13.0685H10.5" 
+        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Second chain link */}
+      <path d="M14.5 13.0685H16.2C17.8802 13.0685 19.2342 11.7144 19.2342 10.0342C19.2342 8.35409 17.8802 7 16.2 7H13.5" 
+        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Middle connecting line */}
+      <path d="M10 10H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Added subtle details */}
+      <path d="M7.5 9.5C7.5 9.5 7 10 7 10.5C7 11 7.5 11.5 7.5 11.5" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round" />
+      <path d="M16.5 9.5C16.5 9.5 17 10 17 10.5C17 11 16.5 11.5 16.5 11.5" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round" />
+    </svg>
+  );
+
+
 const menuItems = {
   Ecosystem: {
     sections: [
@@ -175,6 +192,7 @@ const menuItems = {
       {
         title: "About",
         items: [
+          { icon: <ChainIcon />, label: "OPoC", link: "/opoc" },
           { icon: <BrainIcon />, label: "Consensus", link: "/consensus" },
           { icon: <WhitepaperIcon />, label: "Whitepaper", link: "/whitepaper" },
           {
