@@ -56,11 +56,45 @@ export const DiscordIcon = () => (
 </svg>
 );
 
+
+export const RoadmapIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main horizontal road */}
+    <path d="M3 12H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    
+    {/* Milestone points */}
+    <circle cx="7" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="17" cy="12" r="1.5" fill="currentColor" />
+    
+    {/* Vertical direction indicators */}
+    <path d="M7 8V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M12 6V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M17 8V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    
+    {/* Bottom indicators */}
+    <path d="M7 14V16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M12 14V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M17 14V16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 export const XIcon = () => (
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   {/* Simplified and improved */}
   <path d="M17.1761 3H20.3037L13.5642 10.6731L21.5 21H15.0993L10.0765 14.8901L4.30439 21H1.17398L8.35239 12.7533L0.75 3H7.31779L11.8606 8.58303L17.1761 3Z" fill="currentColor" />
 </svg>
+);
+
+export const GithubIcon = () => ( 
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path 
+        fillRule="evenodd" 
+        clipRule="evenodd" 
+        d="M12 2C6.477 2 2 6.477 2 12C2 16.418 4.865 20.166 8.839 21.489C9.339 21.581 9.521 21.278 9.521 21.017C9.521 20.782 9.512 20.082 9.508 19.241C6.726 19.861 6.139 17.866 6.139 17.866C5.685 16.726 5.031 16.424 5.031 16.424C4.132 15.785 5.097 15.797 5.097 15.797C6.094 15.867 6.625 16.84 6.625 16.84C7.521 18.412 8.97 17.912 9.539 17.661C9.631 17.027 9.889 16.628 10.175 16.419C7.954 16.207 5.62 15.344 5.62 11.476C5.62 10.323 6.01 9.38 6.644 8.644C6.54 8.394 6.2 7.443 6.743 6.088C6.743 6.088 7.585 5.823 9.497 7.098C10.295 6.879 11.15 6.769 12 6.765C12.85 6.769 13.705 6.879 14.505 7.098C16.415 5.823 17.255 6.088 17.255 6.088C17.8 7.443 17.46 8.394 17.356 8.644C17.992 9.38 18.38 10.323 18.38 11.476C18.38 15.355 16.042 16.204 13.813 16.411C14.173 16.671 14.498 17.184 14.498 17.969C14.498 19.093 14.484 20.692 14.484 21.017C14.484 21.281 14.663 21.587 15.173 21.486C19.138 20.159 22 16.415 22 12C22 6.477 17.523 2 12 2Z" 
+        fill="currentColor"
+      />
+    </svg>
 );
 
 export const BrainIcon = () => (
@@ -156,8 +190,7 @@ const menuItems = {
             label: "UOMI Grants",
             description:
               "Pitch your startup to win cash prizes, VC funding and marketing.",
-            link: "#",
-            comingSoon: true
+            link: "/grants",
           },
         ],
       },
@@ -172,17 +205,6 @@ const menuItems = {
         items: [
           { icon: <PortalIcon />, label: "Developer Portal", link: "/docs" },
           { icon: <DocumentIcon />, label: "Documentation", link: "https://docs.uomi.ai" },
-        ],
-      },
-      {
-        title: "Developer Socials",
-        items: [
-          {
-            icon: <DiscordIcon />,
-            label: "Developer Discord",
-            link: "https://discord.gg/RV5DUpjsdY",
-          },
-          { icon: <XIcon />, label: "Developer X", link: "https://x.com/uomiNetwork" },
         ],
       },
     ],
@@ -200,6 +222,7 @@ const menuItems = {
             label: "Deterministic indeterminism",
             link: "/deterministc-indeterminism",
           },
+          { icon: <RoadmapIcon />, label: "Roadmap", link: "/roadmap" },
           { icon: <BlogIcon />, label: "Blog", link: "/blog" },
         ],
       },
@@ -212,13 +235,8 @@ const menuItems = {
             label: "Community Discord",
             link: "https://discord.gg/RV5DUpjsdY",
           },
+          { icon: <GithubIcon />, label: "GitHub", link: "https://github.com/uomi-network" },
         ],
-      },
-      {
-        title: "The Foundation",
-        description:
-          "The UOMI Foundation is dedicated to the growth and adoption of the UOMI protocol's ecosystem.",
-        link: "/resources/foundation",
       },
     ],
   },
@@ -420,7 +438,7 @@ const Navbar = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="p-6 flex flex-row gap-12 min-w-[600px]">
+                          <div className="p-6 flex flex-row gap-12 min-w-[200px]">
                             {menuItems[menuName].sections.map(
                               (section, idx) => (
                                 <div key={idx} className="space-y-3">

@@ -126,45 +126,7 @@ const Footer = () => {
             </div>
           </div>
   
-          {/* Newsletter */}
-          <div
-            className={`mt-12 md:mt-16 p-4 md:p-6 rounded-xl bg-zinc-900 border border-zinc-800`}
-          >
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-center">
-              <div className="md:col-span-2">
-                <h3 className="text-lg md:text-xl font-bold mb-2">Stay up to date</h3>
-                <p
-                  className={`text-sm md:text-base text-gray-300`}
-                >
-                  Subscribe to our newsletter for the latest updates on product
-                  launches, ecosystem news, and developer resources.
-                </p>
-              </div>
-              <div className="w-full">
-                <div className="flex flex-col sm:flex-row">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className={`px-3 md:px-4 py-2 md:py-3 rounded-lg sm:rounded-r-none w-full mb-2 sm:mb-0 focus:outline-none focus:ring-2 bg-zinc-800 border-zinc-700 text-white focus:ring-[#dffe00] border text-sm md:text-base`}
-                  />
-                  <button
-                    className="text-black px-3 md:px-4 py-2 md:py-3 rounded-lg sm:rounded-l-none font-medium transition-colors text-sm md:text-base"
-                    style={{
-                      backgroundColor: "#dffe00",
-                    }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.backgroundColor = "#c8e500")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.backgroundColor = "#dffe00")
-                    }
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+       
   
           {/* Bottom */}
           <div

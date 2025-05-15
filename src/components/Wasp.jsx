@@ -50,33 +50,10 @@ const WaspPresentation = () => {
   }, []);
   
   // Progress indicator for sticky code section
-  const codeRef = useRef(null);
-  const [codeProgress, setCodeProgress] = useState(0);
-  
-  useEffect(() => {
-    const updateCodeProgress = () => {
-      if (codeRef.current) {
-        const { top, height } = codeRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        // Calculate progress through the section
-        if (top <= 0) {
-          const progress = Math.min(Math.abs(top) / (height - windowHeight), 1);
-          setCodeProgress(progress);
-        } else {
-          setCodeProgress(0);
-        }
-      }
-    };
-    
-    window.addEventListener('scroll', updateCodeProgress);
-    return () => window.removeEventListener('scroll', updateCodeProgress);
-  }, []);
+
   
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden">      
-    
-      
       {/* Hero Section */}
       <section 
         id="hero" 
@@ -132,6 +109,7 @@ const WaspPresentation = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="bg-[#c8e500] text-black rounded-md px-5 py-2.5 text-sm font-medium hover:bg-[#daff00] transition-colors duration-200"
+                  onClick={() => window.open("https://docs.uomi.ai/build/build-an-agent/installing-wasp", "_blank")}
                 >
                   Start Building
                 </motion.button>
@@ -139,6 +117,7 @@ const WaspPresentation = () => {
                 <motion.button
                   whileHover={{ borderColor: "#c8e500" }}
                   className="bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-md px-5 py-2.5 text-sm font-medium transition-colors duration-200"
+                  onClick={() => window.open("https://docs.uomi.ai/build/build-an-agent", "_blank")}
                 >
                   Read Documentation
                 </motion.button>
@@ -344,12 +323,7 @@ const WaspPresentation = () => {
                 </div>
                 <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
                 <p className="text-zinc-400 text-sm flex-grow">{feature.description}</p>
-                <div className="mt-4">
-                  <button className="text-[#c8e500] text-sm flex items-center hover:underline transition-colors duration-200">
-                    <span>Learn more</span>
-                    <ChevronRight size={14} className="ml-1" />
-                  </button>
-                </div>
+               
                 </div>
                 
                 {/* Step indicator dot - visible on mobile */}
@@ -372,10 +346,8 @@ const WaspPresentation = () => {
               ref={sectionRefs.code}
               className="sticky top-0 z-30 bg-zinc-950 py-20 border-y border-zinc-900 min-h-screen flex items-center"
             >
-              {/* Progress indicator */}
-              <div className="fixed left-0 top-0 h-1 bg-[#c8e500]" style={{ width: `${codeProgress * 100}%` }} />
               
-              <div ref={codeRef} className="container mx-auto px-6 max-w-5xl">
+              <div  className="container mx-auto px-6 max-w-5xl">
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
                 <div className="lg:col-span-2">
                   <motion.div
@@ -421,25 +393,7 @@ const WaspPresentation = () => {
                     ))}
                     </div>
                     
-                    <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="flex items-center space-x-4"
-                    >
-                    <button className="flex items-center text-[#c8e500] text-sm hover:underline transition-colors duration-200">
-                      <span>View documentation</span>
-                      <ArrowRight size={14} className="ml-1" />
-                    </button>
-                    
-                    <div className="w-px h-4 bg-zinc-800"></div>
-                    
-                    <button className="flex items-center text-zinc-400 text-sm hover:text-[#c8e500] transition-colors duration-200">
-                      <span>Examples</span>
-                      <ChevronRight size={14} className="ml-1" />
-                    </button>
-                    </motion.div>
+                   
                   </motion.div>
                 </div>
                 
@@ -467,44 +421,70 @@ const WaspPresentation = () => {
                     
                     <div className="relative">
                       <pre className="p-4 overflow-x-auto text-xs font-mono leading-relaxed text-zinc-300">
-                        <code>{`use wasp_sdk::prelude::*;
+                        <code>{`use serde::{Deserialize, Serialize};
+use utils::log;
+mod utils;
 
-        #[derive(Agent)]
-        struct TradingAgent {
-            balance: f64,
-            trade_history: Vec<Trade>,
-        }
+#[derive(Serialize, Deserialize, Debug)]
+struct Message {
+    role: String,
+    content: String,
+}
 
-        #[agent_methods]
-        impl TradingAgent {
-            pub fn new() -> Self {
-              Self {
-                balance: 1000.0,
-                trade_history: Vec::new(),
-              }
-            }
-            
-            pub fn make_decision(&mut self, market_data: MarketData) -> Action {
-              // Your agent's logic here
-              let analysis = self.analyze_market(market_data);
-              
-              if analysis.should_buy {
-                self.buy(market_data.symbol, analysis.amount)
-              } else if analysis.should_sell {
-                self.sell(market_data.symbol, analysis.amount)
-              } else {
-                Action::Wait
-              }
-            }
-            
-            fn analyze_market(&self, data: MarketData) -> Analysis {
-              // Advanced market analysis
-              // ...
-            }
-        }
+fn parse_input(input: &str) -> Vec<Message> {
+    // Parse the input string into a JSON Value
+    let parsed: Vec<Message> = serde_json::from_str(input)
+        .expect("Failed to parse input JSON");
+    parsed
+}
 
-        // Automatically export your agent to WASM
-        wasp_sdk::export_agent!(TradingAgent);`}</code>
+fn system_message(content: String) -> Message {
+    Message {
+        role: "system".to_string(),
+        content,
+    }
+}
+
+fn process_messages(
+      system_message: Message, 
+      mut messages: Vec<Message>) -> Vec<Message> {
+    messages.insert(0, system_message);
+    messages
+}
+
+#[no_mangle]
+pub extern "C" fn run() {
+    log("Start agent execution!");
+    
+    //get the input
+    let input = utils::read_input();
+    
+    let input = String::from_utf8_lossy(&input);
+
+    let input = parse_input(&input);
+    
+    //create a system message
+    let system_message = system_message("You are a UOMI Agent!".to_string());
+
+    let modified_messages = process_messages(system_message, input);
+    
+    let ai_input= serde_json::json!({
+        "messages": modified_messages,
+    }).to_string();
+
+    let ai_input_bytes = ai_input.as_bytes().to_vec();
+
+    let ai_response = utils::call_ai_service(1, ai_input_bytes);
+
+    let ai_response_str = String::from_utf8(ai_response.clone()).unwrap();
+
+    let ai_response_content = extract_ai_response_content(ai_response_str);
+
+    let ai_response_content_bytes = ai_response_content.as_bytes().to_vec();
+
+    // save output
+    utils::save_output(&ai_response_content_bytes);
+}`}</code>
                       </pre>
                       
                       {/* Line highlight effect */}
@@ -554,101 +534,7 @@ const WaspPresentation = () => {
               </div>
             </section>
             
-            {/* How It Works Section */}
-      <section 
-        id="workflow" 
-        ref={sectionRefs.workflow}
-        className="py-24 bg-black relative"
-      >
-        <div>
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-zinc-900 hidden lg:block"></div>
-        
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="inline-block px-4 py-1.5 bg-zinc-900 rounded-full text-xs border border-zinc-800 text-[#c8e500] mb-4"
-            >
-              <span className="mr-2">•</span>WORKFLOW
-            </motion.div>
-            
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl font-bold mb-4"
-            >
-              How it works
-            </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-zinc-400 max-w-md mx-auto"
-            >
-              From development to deployment in three simple steps
-            </motion.p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            {/* Connecting line */}
-            <div className="absolute top-24 left-[10%] right-[10%] h-px bg-zinc-800 hidden md:block"></div>
-            
-            {[
-              {
-                step: "01",
-                title: "Develop",
-                description: "Create your agent with our intuitive SDK and hot-reloading environment"
-              },
-              {
-                step: "02",
-                title: "Test",
-                description: "Verify behavior with our interactive console and debugging tools"
-              },
-              {
-                step: "03",
-                title: "Deploy",
-                description: "Deploy directly to the UOMI network with a single command"
-              }
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.2 }} 
-                className="relative"
-                >
-                <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 h-full flex flex-col relative z-10">
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-[#c8e500] font-medium text-sm">
-                      {step.step}
-                    </div>
-                    <div className="w-8 h-8 rounded-full border border-[#c8e500]/20"></div>
-                  </div>
-                  <h3 className="text-xl font-medium mb-2">{step.title}</h3>
-                  <p className="text-zinc-400 text-sm flex-grow">{step.description}</p>
-                  <div className="mt-4">
-                    <button className="text-[#c8e500] text-sm flex items-center hover:underline transition-colors duration-200">
-                      <span>Learn more</span>
-                      <ChevronRight size={14} className="ml-1" />
-                    </button>
-                  </div>
-                </div>
-
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        </div>
-
-      </section>
+         
       </div>
 
   );

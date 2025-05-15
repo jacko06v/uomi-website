@@ -79,13 +79,6 @@ const sections = [
     color: '#c8e500'
   },
   {
-    title: 'Dispute Resolution',
-    subtitle: 'Efficient Verification',
-    text: "When validators disagree, OPoC doesn't require the entire computation to be redone. Instead, it uses a binary search approach to identify exactly where computations diverged.",
-    detail: 'By storing hashes of intermediate states, the network can pinpoint discrepancies and verify only the contested steps, dramatically reducing verification costs.',
-    color: '#c8e500'
-  },
-  {
     title: 'Deterministic Output',
     subtitle: 'Consistency Guarantees',
     text: 'To ensure validators compute consistent outputs across different hardware, OPoC employs quantization techniques and stable randomness methods.',
@@ -802,432 +795,93 @@ export default function OpocExplainer() {
         </div>
       </motion.div>
       
-      {/* Dispute Resolution */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px 0px" }}
-        variants={fadeUpVariant}
-        className="py-24 px-6 md:px-24 bg-gradient-to-b from-black to-black/90"
-      >
-        <div className="max-w-5xl mx-auto">
-          <AnimatedTitle
-            text="Efficient Dispute Resolution"
-            className="text-4xl md:text-6xl font-bold text-white mb-4"
-          />
-          <div className="h-1 w-24 bg-[#c8e500] mb-16"></div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-5">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-              >
-                <h3 className="text-2xl font-semibold text-[#c8e500] mb-6">Smart Verification Process</h3>
-                <p className="text-white/70 leading-relaxed mb-8">
-                  When validators disagree on a computation result, OPoC employs a binary search approach to identify exactly where the computation diverged.
-                </p>
-                
-                <p className="text-white/70 leading-relaxed mb-8">
-                  This allows the network to verify only the specific steps that are in dispute, rather than recomputing the entire task from scratch.
-                </p>
-                
-                <div className="space-y-6 text-white/70">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#c8e500] text-black flex items-center justify-center mr-4 mt-1">1</div>
-                    <p>Validators store hashes of intermediate computation states</p>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#c8e500] text-black flex items-center justify-center mr-4 mt-1">2</div>
-                    <p>Binary search identifies the exact step where computations diverged</p>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#c8e500] text-black flex items-center justify-center mr-4 mt-1">3</div>
-                    <p>Only the disputed step is re-verified by the larger set of validators</p>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#c8e500] text-black flex items-center justify-center mr-4 mt-1">4</div>
-                    <p>Dishonest validators are identified and penalized</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-            
-            <div className="lg:col-span-7">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="bg-white/5 p-8 rounded-xl border border-white/10 h-full"
-              >
-                <h3 className="text-2xl font-semibold text-[#c8e500] mb-8">The Binary Search Approach</h3>
-                
-                <div className="space-y-6">
-                  {/* Visual representation of binary search */}
-                  <div className="relative">
-                    <div className="h-16 relative">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "100%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1 }}
-                        className="absolute top-0 left-0 h-16 bg-gradient-to-r from-[#c8e500]/20 to-[#c8e500]/5 rounded-lg"
-                      />
-                      
-                      <div className="absolute top-0 left-0 h-16 w-full flex items-center justify-between px-4">
-                        <div className="font-mono text-white/80">start</div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 1.1 }}
-                          className="h-full bg-[#c8e500]/30 w-[2px]"
-                        />
-                        <div className="font-mono text-white/80">end</div>
-                      </div>
-                    </div>
-                    
-                    <div className="my-4 text-center text-white/50">Step 1: Check middle hash</div>
-                    
-                    <div className="h-16 relative">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "50%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 1.2 }}
-                        className="absolute top-0 left-0 h-16 bg-gradient-to-r from-[#c8e500]/30 to-[#c8e500]/10 rounded-lg"
-                      />
-                      
-                      <div className="absolute top-0 left-0 h-16 w-full flex items-center justify-between px-4">
-                        <div className="font-mono text-white/80">start</div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 2 }}
-                          className="h-full bg-red-500/50 w-[2px]"
-                        >
-                          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-red-400 text-xs">MISMATCH</div>
-                        </motion.div>
-                        <div className="font-mono text-white/80">end</div>
-                      </div>
-                    </div>
-                    
-                    <div className="my-4 text-center text-white/50">Step 2: Check quarter hash</div>
-                    
-                    <div className="h-16 relative">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "25%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 2.1 }}
-                        className="absolute top-0 left-0 h-16 bg-gradient-to-r from-[#c8e500]/40 to-[#c8e500]/20 rounded-lg"
-                      />
-                      
-                      <div className="absolute top-0 left-0 h-16 w-full flex items-center justify-between px-4">
-                        <div className="font-mono text-white/80">start</div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 2.7 }}
-                          className="absolute left-[25%] h-full bg-[#c8e500]/50 w-[2px]"
-                        >
-                          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-[#c8e500] text-xs">MATCH</div>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 2.8 }}
-                          className="absolute left-[50%] h-full bg-red-500/50 w-[2px]"
-                        />
-                        <div className="font-mono text-white/80">end</div>
-                      </div>
-                    </div>
-                    
-                    <div className="my-4 text-center text-white/50">Step 3: Check 3/8 hash</div>
-                    
-                    <div className="h-16 relative">
-                      <motion.div
-                        initial={{ width: "25%" }}
-                        whileInView={{ width: "37.5%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 3 }}
-                        className="absolute top-0 left-0 h-16 bg-gradient-to-r from-[#c8e500]/50 to-[#c8e500]/30 rounded-lg"
-                      />
-                      
-                      <div className="absolute top-0 left-0 h-16 w-full flex items-center justify-between px-4">
-                        <div className="font-mono text-white/80">start</div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 3.5 }}
-                          className="absolute left-[37.5%] h-full bg-red-500/50 w-[2px]"
-                        >
-                          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-red-400 text-xs">ERROR!</div>
-                        </motion.div>
-                        <div className="absolute left-[25%] h-full bg-[#c8e500]/50 w-[2px]" />
-                        <div className="font-mono text-white/80">end</div>
-                      </div>
-                    </div>
-                    
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 3.8 }}
-                      className="mt-8 bg-black/50 border border-white/10 p-4 rounded-lg"
-                    >
-                      <p className="text-white/80 leading-relaxed">
-                        <span className="text-[#c8e500] font-semibold">Result:</span> Error identified between 25% and 37.5% of computation. Only this small segment needs re-verification, reducing overhead by ~96%.
-                      </p>
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+    
       
       {/* Deterministic Computation */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px 0px" }}
-        variants={fadeUpVariant}
-        className="py-24 px-6 md:px-24 bg-black"
-      >
-        <div className="max-w-5xl mx-auto">
-          <AnimatedTitle
-            text="Ensuring Deterministic Computation"
-            className="text-4xl md:text-6xl font-bold text-white mb-4"
-          />
-          <div className="h-1 w-24 bg-[#c8e500] mb-16"></div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h3 className="text-2xl font-semibold text-[#c8e500] mb-6">The Consistency Challenge</h3>
-              <p className="text-white/70 leading-relaxed mb-8">
-                AI models often use floating-point operations that can produce slightly different results across different hardware configurations, potentially causing false disputes.
-              </p>
-              
-              <h4 className="text-xl font-semibold text-white/90 mb-4">Challenges:</h4>
-              <ul className="space-y-4 text-white/70">
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-red-400 mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span>Floating-point math is non-deterministic across hardware</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-red-400 mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span>Random number generation can cause inconsistencies</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-red-400 mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span>Parallel execution ordering can affect results</span>
-                </li>
-              </ul>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <h3 className="text-2xl font-semibold text-[#c8e500] mb-6">OPoC Solutions</h3>
-              
-              <div className="space-y-8">
-                <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-                  <h4 className="text-xl font-semibold text-[#c8e500] mb-3">Quantization</h4>
-                  <p className="text-white/70 mb-4">
-                    Converting floating-point values to integer representations to ensure consistent computation across all hardware.
-                  </p>
-                  <div className="bg-black/40 p-3 rounded font-mono text-sm text-white/80">
-                    Q(x) = round((x - Range<sub>min</sub>) / S)
-                  </div>
-                </div>
-                
-                <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-                  <h4 className="text-xl font-semibold text-[#c8e500] mb-3">Fixed PRNG Seeds</h4>
-                  <p className="text-white/70 mb-4">
-                    Using the same pseudorandom number generator seeds for all validators to ensure identical "random" values.
-                  </p>
-                </div>
-                
-                <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-                  <h4 className="text-xl font-semibold text-[#c8e500] mb-3">Integer-Based Models</h4>
-                  <p className="text-white/70 mb-4">
-                    Using models specifically designed to operate with integer math rather than floating-point operations.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+   <motion.section
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: "-100px 0px" }}
+  variants={fadeUpVariant}
+  className="bg-black text-white py-24 px-6 md:px-24"
+>
+  <div className="max-w-6xl mx-auto space-y-16">
+    {/* Title */}
+    <div>
+      <AnimatedTitle
+        text="Deterministic Indeterminism"
+        className="text-4xl md:text-6xl font-bold text-white"
+      />
+      <div className="h-1 w-24 bg-[#c8e500] mt-4"></div>
+    </div>
+
+    {/* Statement */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="space-y-10 max-w-3xl"
+    >
+      <h3 className="text-2xl md:text-3xl font-semibold text-[#c8e500] mb-4">
+        Embracing Uncertainty, Verifying Truth
+      </h3>
+      <p className="text-white/70 leading-relaxed">
+        Traditional systems attempt to force determinism by eliminating all randomness. But in doing so, they restrict creativity, adaptability, and the natural behavior of intelligent agents.
+      </p>
+      <p className="text-white/70 leading-relaxed">
+        UOMI introduces <span className="text-white font-semibold">Deterministic Indeterminism</span>: an innovative approach that accepts controlled unpredictability, and proves that results are still within defined and verifiable bounds.
+      </p>
+    </motion.div>
+
+    {/* Proof Section */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="space-y-12"
+    >
+      <div className="max-w-3xl">
+        <h3 className="text-2xl md:text-3xl font-semibold text-[#c8e500] mb-4">
+          Proofs, not Reproduction
+        </h3>
+        <p className="text-white/70 leading-relaxed">
+          Instead of forcing every validator to reach an identical output, UOMI allows slight variations and proves via a probabilistic consensus that the computation was executed faithfully.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-8">
+        {/* Range of Acceptable Results */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-4">
+          <h4 className="text-xl font-semibold text-[#c8e500]">Bounded Result Spaces</h4>
+          <p className="text-white/70 text-sm">
+            Validators agree on an expected range of valid outcomes, rather than a single hash. This makes room for intelligent flexibility.
+          </p>
         </div>
-      </motion.div>
+
+        {/* Probabilistic Verification */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-4">
+          <h4 className="text-xl font-semibold text-[#c8e500]">Probabilistic Proofs</h4>
+          <p className="text-white/70 text-sm">
+            Instead of reproducing the exact result, validators verify that an output could plausibly come from the claimed model under shared conditions.
+          </p>
+        </div>
+
+        {/* Security through Diversity */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-4">
+          <h4 className="text-xl font-semibold text-[#c8e500]">Diversity as a Feature</h4>
+          <p className="text-white/70 text-sm">
+            Agent decisions are no longer constrained by determinism. Instead, systems evolve with a richer, more natural decision space — still verifiable, always honest.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</motion.section>
+
       
-      {/* Applications & Future */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px 0px" }}
-        variants={staggerVariant}
-        className="py-24 px-6 md:px-24 bg-gradient-to-b from-black to-black/80"
-      >
-        <div className="max-w-5xl mx-auto">
-          <AnimatedTitle
-            text="Applications & Future"
-            className="text-4xl md:text-6xl font-bold text-white mb-4"
-          />
-          <div className="h-1 w-24 bg-[#c8e500] mb-16"></div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              variants={staggerItemVariant}
-              className="bg-white/5 p-8 rounded-xl border border-white/10 flex flex-col h-full"
-            >
-              <div className="flex-1">
-                <div className="w-12 h-12 bg-[#c8e500]/20 rounded-full flex items-center justify-center mb-6">
-                  <svg className="w-6 h-6 text-[#c8e500]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold text-[#c8e500] mb-4">Verifiable AI Oracles</h3>
-                <p className="text-white/70 mb-6">
-                  Enabling smart contracts to securely access AI intelligence with cryptographic and economic guarantees.
-                </p>
-              </div>
-              <div className="mt-auto pt-6 border-t border-white/10">
-                <p className="text-white/50 text-sm">
-                  "OPoC bridges the security gap between blockchain and AI, creating trustworthy oracles for complex computations."
-                </p>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              variants={staggerItemVariant}
-              className="bg-white/5 p-8 rounded-xl border border-white/10 flex flex-col h-full"
-            >
-              <div className="flex-1">
-                <div className="w-12 h-12 bg-[#c8e500]/20 rounded-full flex items-center justify-center mb-6">
-                  <svg className="w-6 h-6 text-[#c8e500]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold text-[#c8e500] mb-4">Decentralized Inference</h3>
-                <p className="text-white/70 mb-6">
-                  Creating resilient, censorship-resistant AI inference networks that can't be shut down by any single entity.
-                </p>
-              </div>
-              <div className="mt-auto pt-6 border-t border-white/10">
-                <p className="text-white/50 text-sm">
-                  "With OPoC, AI computation becomes a public utility, available to anyone without centralized gatekeepers."
-                </p>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              variants={staggerItemVariant}
-              className="bg-white/5 p-8 rounded-xl border border-white/10 flex flex-col h-full"
-            >
-              <div className="flex-1">
-                <div className="w-12 h-12 bg-[#c8e500]/20 rounded-full flex items-center justify-center mb-6">
-                  <svg className="w-6 h-6 text-[#c8e500]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold text-[#c8e500] mb-4">AI-Powered DeFi</h3>
-                <p className="text-white/70 mb-6">
-                  Enabling complex risk models, predictive analytics, and intelligent trading strategies in decentralized finance applications.
-                </p>
-              </div>
-              <div className="mt-auto pt-6 border-t border-white/10">
-                <p className="text-white/50 text-sm">
-                  "OPoC unlocks the potential for sophisticated AI-driven financial applications without sacrificing decentralization."
-                </p>
-              </div>
-            </motion.div>
-          </div>
-          
-          <motion.div
-            variants={fadeUpVariant}
-            className="mt-20 bg-gradient-to-r from-[#c8e500]/20 to-transparent p-10 rounded-xl border border-[#c8e500]/30"
-          >
-            <h3 className="text-3xl font-bold text-white mb-6">The Future of OPoC</h3>
-            <p className="text-xl text-white/80 leading-relaxed mb-8">
-              OPoC represents a fundamental breakthrough in how decentralized networks can efficiently handle complex AI computations while maintaining strong security guarantees.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h4 className="text-xl font-semibold text-[#c8e500] mb-3">Research Directions</h4>
-                <ul className="space-y-2 text-white/70">
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Multi-model coordination protocols</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Advanced quantization techniques</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Hybrid ZK-OPoC approaches</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-xl font-semibold text-[#c8e500] mb-3">Implementation Roadmap</h4>
-                <ul className="space-y-2 text-white/70">
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Testnet deployments with LLMs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Cross-chain OPoC oracle networks</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-[#c8e500] mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>Developer SDKs and integration tools</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
+     
       
       {/* Footer / Call to Action */}
       <motion.div 
@@ -1247,9 +901,11 @@ export default function OpocExplainer() {
             OPoC brings mathematical guarantees and economic alignment to large AI model inference, enabling a new generation of decentralized AI applications.
           </p>
           
-          <div className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg">
-            Explore OPoC Technology
-          </div>
+          <button className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg"
+            onClick={() => window.location.href = "https://uomi.ai/consensus"}
+          >
+            Explore OPoC Paper
+          </button>
           
           <motion.div
             initial={{ opacity: 0 }}
