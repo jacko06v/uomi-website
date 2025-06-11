@@ -83,7 +83,7 @@ const OpocRoadmap = () => {
       title: "Turing β",
       subtitle: "(testnet)",
       focus: "TEE Oracles - Unleash AI agents in Web2",
-      description: "The Turing β Testnet introduces TEE Web2 Oracles, enabling AI Agents to access Web2 data and subscriptions with minimized trust assumptions and latency. A TSS-enabled bridge with relayers will be deployed to allow for trustless bridging of blockchain assets between the UOMI Network and other Blockchains. Agents issuance and inference fee burn will be enabled with testnet tokens.",
+      description: "The Turing β Testnet introduces TEE Web2 Oracles, enabling AI Agents to access Web2 data and subscriptions with minimized trust assumptions and latency. A TSS-enabled bridge with relayers will be deployed to allow for trustless bridging of blockchain assets between the UOMI Network and other Blockchains. A Finite State Automata system, for autonomous transaction triggering.  Agents issuance and inference fee burn will be enabled with testnet tokens.",
       date: "Q4 - 2025"
     },
     {

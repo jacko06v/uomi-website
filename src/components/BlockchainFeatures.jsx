@@ -320,10 +320,10 @@ const BlockchainFeatures = () =>  {
                 style={{ backgroundColor: "rgba(223, 254, 0, 0.3)" }}
               ></div>
               <p className="text-zinc-400 text-sm font-medium mb-1">
-                Optimistic Proof of Computation
+                OPoC - Optimistic Proof of Computation
               </p>
               <p className="text-zinc-300 text-base mb-4">
-                Trust-minimized mechanism to verify AI model execution.
+                Efficient AI verification algorithm for non-deterministic Computation.
               </p>
             </div>
           </motion.div>
@@ -358,10 +358,10 @@ const BlockchainFeatures = () =>  {
                 style={{ backgroundColor: "rgba(223, 254, 0, 0.3)" }}
               ></div>
               <p className="text-zinc-400 text-sm font-medium mb-1">
-                NFT wallets
+                Multi-Chain TSS - Trustless Multi-Chain Transaction Signing
               </p>
               <p className="text-zinc-300 text-base">
-                Agents own and manage assets, vote, and evolve autonomously.
+                Threshold Signatures Schemes enable AI Agents to sign transactions on any chain with no intermediaries.
               </p>
             </div>
           </motion.div>
@@ -391,17 +391,17 @@ const BlockchainFeatures = () =>  {
                 <Globe className="h-6 w-6" style={{ color: "#dffe00" }} />
               </div>
               <h3 className="text-3xl font-bold text-white mb-3">
-                Multi-Chain
+               TEE Oracles
               </h3>
               <div
                 className="h-px w-16 mb-4"
                 style={{ backgroundColor: "rgba(223, 254, 0, 0.3)" }}
               ></div>
               <p className="text-zinc-400 text-sm font-medium mb-1">
-                Cross-chain AI agents
+                TEE Web2 Oracles
               </p>
               <p className="text-zinc-300 text-base">
-                UOMI enables native interchain operations for its agents.
+                Access Web2 data and subscriptions with minimized trust assumptions leveraging Trusted Execution Environments.
               </p>
             </div>
           </motion.div>

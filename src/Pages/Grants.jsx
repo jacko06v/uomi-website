@@ -215,10 +215,34 @@ const UomiGrants = () => {
             <h2 className="text-7xl sm:text-8xl md:text-9xl font-extrabold text-[#BDF82D]">
               $500,000
             </h2>
-            <div className="flex items-center justify-center gap-2 text-white/60 mt-6">
+            <div className="flex items-center justify-center gap-2 text-white/60 mt-6 mb-12">
               <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
               <span>Applications Open</span>
             </div>
+            
+            {/* CTA Button in Hero */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="mt-12"
+            >
+              <motion.button 
+                className="inline-block py-4 px-12 bg-transparent border-2 border-[#BDF82D] text-[#BDF82D] text-xl font-bold rounded-full transition-all duration-300"
+                whileHover={{ 
+                  scale: 1.05, 
+                  backgroundColor: "rgba(189, 248, 45, 1)",
+                  color: "#000000",
+                  boxShadow: "0 0 25px rgba(189, 248, 45, 0.4)"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                Apply for a Grant
+              </motion.button>
+              <p className="text-white/40 text-sm mt-4">
+                Average review time: 2-3 weeks
+              </p>
+            </motion.div>
           </motion.div>
         </div>
         

@@ -171,6 +171,31 @@ export const ChainIcon = () => (
     </svg>
   );
 
+  export const UseCasesIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main grid structure */}
+    <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+    
+    {/* AI/Bot indicators in each quadrant */}
+    <circle cx="6.5" cy="6.5" r="1" stroke="currentColor" strokeWidth="1" fill="none" />
+    <circle cx="17.5" cy="6.5" r="1" stroke="currentColor" strokeWidth="1" fill="none" />
+    <circle cx="6.5" cy="17.5" r="1" stroke="currentColor" strokeWidth="1" fill="none" />
+    <circle cx="17.5" cy="17.5" r="1" stroke="currentColor" strokeWidth="1" fill="none" />
+    
+    {/* Connection lines between use cases */}
+    <path d="M10 6.5H14" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeDasharray="1,1" />
+    <path d="M6.5 10V14" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeDasharray="1,1" />
+    <path d="M17.5 10V14" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeDasharray="1,1" />
+    
+    {/* Activity indicators */}
+    <path d="M5.5 7.5L7.5 5.5" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.6" strokeLinecap="round" />
+    <path d="M16.5 7.5L18.5 5.5" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.6" strokeLinecap="round" />
+  </svg>
+);
+
   export const AIAgentIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Main hexagonal structure - representing AI architecture */}
@@ -252,9 +277,8 @@ const menuItems = {
   Resources: {
     sections: [
       {
-        title: "About",
+        title: "Research",
         items: [
-          { icon: <ChainIcon />, label: "OPoC", link: "/opoc" },
           { icon: <BrainIcon />, label: "Consensus", link: "/consensus" },
           { icon: <WhitepaperIcon />, label: "Whitepaper", link: "/whitepaper" },
           {
@@ -262,8 +286,15 @@ const menuItems = {
             label: "Deterministic indeterminism",
             link: "/deterministc-indeterminism",
           },
+        ],
+      },
+      {
+        title: "About",
+        items: [
+          { icon: <ChainIcon />, label: "OPoC", link: "/opoc" },
           { icon: <RoadmapIcon />, label: "Roadmap", link: "/roadmap" },
           { icon: <BlogIcon />, label: "Blog", link: "/blog" },
+          { icon: <UseCasesIcon />, label: "Examples", link: "/applications" },
         ],
       },
       {

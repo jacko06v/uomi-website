@@ -17,6 +17,7 @@ import BlogPost from './Pages/BlogPost';
 import Determinism from './Pages/Deterministc-indeterminism';
 import Roadmap from './Pages/Roadmap';
 import Grants from './Pages/Grants';
+import Applications from './Pages/Applications';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/deterministc-indeterminism" element={<Determinism />} />
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/grants" element={<Grants />} />
+          <Route path="/applications" element={<Applications />} />
       
 
 

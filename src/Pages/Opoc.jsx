@@ -278,7 +278,7 @@ const sections = [
   {
     title: 'Security Guarantees',
     subtitle: 'Mathematical Assurance',
-    text: 'The probability that all selected validators are dishonest drops exponentially as the network grows. With even modest validator pools, the probability of successful fraud becomes vanishingly small.',
+    text: 'The Probability that all selected validators are dishonest drops exponentially as the number of participating validators grows. With even modest validator pools, the probability of successful fraud becomes vanishingly small.',
     detail: 'For a network with 100 validators where 10 validate each computation, the probability of selecting all dishonest validators (assuming 1/3 are dishonest) is approximately 0.0000076.',
     color: '#c8e500'
   },
@@ -373,7 +373,7 @@ const ComparisonTable = () => {
           >
             <td className="p-4">Traditional PoW/PoS</td>
             <td className="p-4 text-red-400">Full network verification</td>
-            <td className="p-4 text-red-400">Cost increases with nodes</td>
+            <td className="p-4 text-red-400">Cost increases linearly with Nodes count</td>
             <td className="p-4">Consensus-based</td>
           </motion.tr>
           <motion.tr 
@@ -385,7 +385,7 @@ const ComparisonTable = () => {
           >
             <td className="p-4">ZK Proofs</td>
             <td className="p-4 text-yellow-400">Low verification, high proving</td>
-            <td className="p-4 text-yellow-400">Limited by prover capacity</td>
+            <td className="p-4 text-yellow-400">Limited by prover capacity, 1000x Overhead</td>
             <td className="p-4">Cryptographic guarantees</td>
           </motion.tr>
           <motion.tr 
@@ -896,7 +896,7 @@ export default function OpocExplainer() {
               <div className="bg-white/5 p-6 rounded-xl border border-white/10">
                 <h3 className="text-xl font-semibold text-[#c8e500] mb-4">Attack Probability</h3>
                 <div className="text-center">
-                  <span className="text-4xl md:text-4xl font-bold text-white">~0.000076%</span>
+                  <span className="text-4xl md:text-4xl font-bold text-white">~0.0000076%</span>
                   <p className="text-white/60 mt-2">Chance of Successful Attack</p>
                 </div>
                 <div className="mt-6 text-white/50 text-sm">
