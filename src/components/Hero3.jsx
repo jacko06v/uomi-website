@@ -53,7 +53,7 @@ const Hero3 = () => {
             className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-tight"
             variants={itemVariants}
           >
-            <span style={{ color: "#dffe00" }}>UOMI IS</span>
+            <span style={{ color: "#dffe00" }}>UOMI</span>
             <br />
             <span className="text-white">WHERE AI MEETS</span>
             <br />
@@ -64,8 +64,7 @@ const Hero3 = () => {
             className="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto px-2"
             variants={itemVariants}
           >
-            UOMI brings DeFi to the next billion users through modular
-            scalability, AI-native infrastructure, and unstoppable ai economic agents.
+            UOMI is the first Layer 1 built for secure AI computation and unstoppable agents that think, act, trade, and evolve, without human input.
           </motion.p>
 
           <motion.div
@@ -95,9 +94,9 @@ const Hero3 = () => {
               }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              onClick={() => window.open("./whitepaper", "_blank")}
+              onClick={() => window.open("./docs", "_blank")}
             >
-              <span>READ THE WHITEPAPER</span>
+              <span>START BUILDING</span>
             </motion.button>
           </motion.div>
         </motion.div>

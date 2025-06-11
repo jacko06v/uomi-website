@@ -75,23 +75,23 @@ const OpocRoadmap = () => {
     {
       title: "Turing α",
       subtitle: "(testnet)",
-      focus: "Agents ability to control crypto assets",
-      description: "The Turing Testnet adds Threshold Signature Scheme (TSS) distributed key generation and signing. This feature enables nodes to sign transactions on behalf of the AI Agents on ANY Blockchain. A TSS-enabled bridge will be deployed to allow for trustless bridging of blockchain assets between UOMI Network and Ethereum. Slashing and inactivity leak will be activated with testnet tokens.",
-      date: "Q1 - 2025"
+      focus: "TSS - Agents ability to control crypto assets",
+      description: "The Turing α Testnet adds Threshold Signature Scheme (TSS) distributed key generation and signing. This feature enables nodes to sign transactions on behalf of the AI Agents on ANY Blockchain. Inference batching will be deployed for parallel AI Models execution.  Slashing and inactivity leak will be activated with testnet tokens.",
+      date: "Q3 - 2025"
     },
     {
       title: "Turing β",
       subtitle: "(testnet)",
-      focus: "Agents ability to control crypto assets",
-      description: "The Turing Testnet adds Threshold Signature Scheme (TSS) distributed key generation and signing. This feature enables nodes to sign transactions on behalf of the AI Agents on ANY Blockchain. A TSS-enabled bridge will be deployed to allow for trustless bridging of blockchain assets between UOMI Network and Ethereum. Slashing and inactivity leak will be activated with testnet tokens.",
-      date: "Q1 - 2025"
+      focus: "TEE Oracles - Unleash AI agents in Web2",
+      description: "The Turing β Testnet introduces TEE Web2 Oracles, enabling AI Agents to access Web2 data and subscriptions with minimized trust assumptions and latency. A TSS-enabled bridge with relayers will be deployed to allow for trustless bridging of blockchain assets between the UOMI Network and other Blockchains. Agents issuance and inference fee burn will be enabled with testnet tokens.",
+      date: "Q4 - 2025"
     },
     {
       title: "UOMI",
       subtitle: "Mainnet",
       focus: "Decentralized Governance and Bridges",
       description: "After thorough testing with the Turing Testnet, the OPoC algorithm will be implemented on the mainnet, enabling AI Agents to securely control valuable digital assets. The mainnet launch includes the creation of the UOMI DAO and a decentralized bridge between Ethereum and UOMI to enable staking with the pre-minted supply for nodes operators, indirect stakers, and VeUOMI holders.",
-      date: "Q2 - 2025"
+      date: "Q5 - 2025"
     }
   ];
   

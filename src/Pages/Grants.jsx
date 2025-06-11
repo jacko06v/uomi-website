@@ -213,7 +213,7 @@ const UomiGrants = () => {
           >
             <span className="block text-white/40 uppercase tracking-widest text-sm mb-4">Total Grants Available</span>
             <h2 className="text-7xl sm:text-8xl md:text-9xl font-extrabold text-[#BDF82D]">
-              $100,000
+              $500,000
             </h2>
             <div className="flex items-center justify-center gap-2 text-white/60 mt-6">
               <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span>

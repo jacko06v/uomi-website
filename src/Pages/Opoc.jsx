@@ -1,17 +1,235 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import EnhancedTitles from "../components/EnhancedTitles";
 
-// Mathematical formula SVG component
-const ProbabilityFormula = () => (
-  <svg viewBox="0 0 320 80" className="w-full max-w-md mx-auto my-6">
-    <text x="10" y="40" fill="#c8e500" fontSize="16" fontFamily="serif" fontStyle="italic">P(X = 0) = </text>
-    <text x="90" y="25" fill="white" fontSize="16" fontFamily="serif" fontStyle="italic">( V-H )</text>
-    <text x="90" y="55" fill="white" fontSize="16" fontFamily="serif" fontStyle="italic">( V )</text>
-    <line x1="90" y1="40" x2="135" y2="40" stroke="white" strokeWidth="1" />
-    <text x="145" y="40" fill="white" fontSize="16" fontFamily="serif" fontStyle="italic">≈ 7.6 × 10⁻⁶</text>
-    <text x="270" y="40" fill="#c8e500" fontSize="16" fontFamily="serif" fontStyle="italic">→ 0</text>
-  </svg>
-);
+const OPoCCalculator = () => {
+  const [stakePerNode, setStakePerNode] = useState(10000);
+  const [totalValidators, setTotalValidators] = useState(100);
+  const [opocValidationSubnet, setOpocValidationSubnet] = useState(10);
+  const [finalValue, setFinalValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    }
+  }
+
+  const applyExponent = (value) => {
+    if (value < 1) return value;
+    const exponent = Math.floor(Math.log10(value));
+    const mantissa = value / Math.pow(10, exponent);
+
+    const superscriptDigits = ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'];
+
+    let exponentSpecialChar = '⁰';
+    if (exponent < 0) {
+      exponentSpecialChar = '⁻';
+    } else {
+      exponentSpecialChar = exponent
+        .toString()
+        .split('')
+        .map(digit => superscriptDigits[parseInt(digit)])
+        .join('');
+    }
+
+    return `${mantissa.toFixed(2)} × 10${exponentSpecialChar}`;
+  }
+
+  const loadFinalValue = async (stakePerNode, totalValidators, opocValidationSubnet) => {
+    if (!stakePerNode || !totalValidators || !opocValidationSubnet) {
+      return setFinalValue('');
+    }
+
+    setIsLoading(true);
+    const V = parseInt(totalValidators);
+    const v = parseInt(opocValidationSubnet);
+    const H = Math.floor(V * 0.66);
+    const stake = parseInt(stakePerNode);
+    
+    if (v < 1) {
+      setFinalValue('0');
+      setIsLoading(false);
+      return;
+    }
+    if (v > (V - H)) {
+      setFinalValue('∞');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const API_BASE_URL = "https://backend.uomi.ai";
+      
+      const response = await fetch(`${API_BASE_URL}/opoccalc`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          V,
+          v,
+          H,
+          stake,
+        }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.output) {
+          setFinalValue(applyExponent(parseFloat(data.output)));
+        } else {
+          setFinalValue('');
+        }
+      } else {
+        const probability = Math.pow((V - H) / V, v);
+        const economicSecurity = stake / probability;
+        setFinalValue(applyExponent(economicSecurity));
+      }
+    } catch (error) {
+      const probability = Math.pow((V - H) / V, v);
+      const economicSecurity = stake / probability;
+      setFinalValue(applyExponent(economicSecurity));
+    }
+    
+    setIsLoading(false);
+  }
+
+  const debouncedLoadFinalValue = useRef(debounce(loadFinalValue, 500));
+
+  useEffect(() => {
+    debouncedLoadFinalValue.current(
+      stakePerNode,
+      totalValidators,
+      opocValidationSubnet
+    );
+  }, [stakePerNode, totalValidators, opocValidationSubnet]);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="w-full max-w-4xl mx-auto bg-white/5 border border-white/10 p-8 md:p-12 rounded-2xl"
+    >
+      <div className="space-y-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <label className="text-white text-lg md:text-xl font-medium">
+            Stake per Node
+          </label>
+          <div className="flex items-center gap-3">
+            <span className="text-white/70 text-lg">$</span>
+            <input
+              type="number"
+              min="0"
+              step="1000"
+              value={stakePerNode}
+              onChange={(e) => setStakePerNode(e.target.value)}
+              className="px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-lg 
+                         focus:outline-none focus:ring-2 focus:ring-[#c8e500] focus:border-transparent
+                         min-w-[150px] transition-all duration-200"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <label className="text-white text-lg md:text-xl font-medium">
+            Total Validators (V)
+          </label>
+          <div className="flex items-center">
+            <input
+              type="number"
+              min="1"
+              max="1000"
+              step="1"
+              value={totalValidators}
+              onChange={(e) => setTotalValidators(e.target.value)}
+              className="px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-lg 
+                         focus:outline-none focus:ring-2 focus:ring-[#c8e500] focus:border-transparent
+                         min-w-[150px] transition-all duration-200"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <label className="text-white text-lg md:text-xl font-medium">
+              OPoC Validation Subnet (v)
+            </label>
+            <span className="text-[#c8e500] text-xl font-bold">
+              {opocValidationSubnet}
+            </span>
+          </div>
+          
+          <div className="w-full">
+            <input
+              type="range"
+              min="1"
+              max={Math.min(totalValidators, 50)}
+              step="1"
+              value={opocValidationSubnet}
+              onChange={(e) => setOpocValidationSubnet(e.target.value)}
+              className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer
+                         [&::-webkit-slider-thumb]:appearance-none 
+                         [&::-webkit-slider-thumb]:h-6 
+                         [&::-webkit-slider-thumb]:w-6 
+                         [&::-webkit-slider-thumb]:bg-[#c8e500] 
+                         [&::-webkit-slider-thumb]:rounded-full 
+                         [&::-webkit-slider-thumb]:cursor-pointer
+                         [&::-webkit-slider-thumb]:shadow-lg
+                         [&::-moz-range-thumb]:appearance-none 
+                         [&::-moz-range-thumb]:h-6 
+                         [&::-moz-range-thumb]:w-6 
+                         [&::-moz-range-thumb]:bg-[#c8e500] 
+                         [&::-moz-range-thumb]:rounded-full
+                         [&::-moz-range-thumb]:border-none
+                         [&::-moz-range-thumb]:cursor-pointer"
+            />
+          </div>
+        </div>
+
+        <motion.div 
+          className="bg-gradient-to-r from-white/5 to-white/10 border border-white/20 rounded-xl p-6 mt-8"
+          animate={isLoading ? { opacity: 0.7 } : { opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <h3 className="text-white text-lg md:text-xl font-medium">
+              Economic Security per Inference
+            </h3>
+            <div className="flex items-center gap-3">
+              {isLoading && (
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#c8e500]"></div>
+              )}
+              <span className="text-[#c8e500] text-2xl md:text-3xl font-bold">
+                {finalValue ? `${finalValue} $` : '—'}
+              </span>
+            </div>
+          </div>
+          
+          {finalValue && finalValue !== '∞' && finalValue !== '0' && (
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-white/60 text-sm mt-4"
+            >
+              This represents the minimum reward an attacker would need to make cheating 
+              financially worthwhile, given the probability of successfully compromising 
+              all selected validators.
+            </motion.p>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
 
 const TypingText = ({ text, className }) => {
   const [displayText, setDisplayText] = useState('');
@@ -79,10 +297,10 @@ const sections = [
     color: '#c8e500'
   },
   {
-    title: 'Deterministic Output',
-    subtitle: 'Consistency Guarantees',
-    text: 'To ensure validators compute consistent outputs across different hardware, OPoC employs quantization techniques and stable randomness methods.',
-    detail: 'Fixed PRNG seeds and integer-based inference models eliminate floating-point inconsistencies that could cause false disputes between honest validators.',
+    title: 'Verifying Non Deterministic Output',
+    subtitle: 'Deterministic Undeterminism',
+    text: 'LLMs leverages random sampling to explore a wider latent space in their tokens production. This introduces formidable challenges for AI inference verification, making computations not fully reproducible. UOMI solves this hard problem with a groundbreaking approach.',
+    detail: "Instead of verifying simple token match, UOMI verifies token probability distributions, requiring that each token produced fits inside a pre-defined boundary of the model's token probability distribution. This approach allows for secure inference verification with random token sampling, maintaining AI models full capabilities.",
     color: '#c8e500'
   }
 ];
@@ -297,7 +515,7 @@ export default function OpocExplainer() {
           const sectionsScrolledAmount = Math.abs(sectionsTopPosition);
           
           // Each section takes up one viewport height
-          const sectionHeight = windowHeight;
+         const sectionHeight = windowHeight * 0.6;
           
           // Calculate the active section based on how far we've scrolled
           const newActiveSection = Math.min(
@@ -381,6 +599,11 @@ export default function OpocExplainer() {
             style={{ y: titleY, opacity: opacityTransform }}
             className="text-center"
           >
+            <EnhancedTitles
+              category="Secured by"
+            
+            />
+
             <AnimatedTitle
               text="Optimistic Proof of Computation"
               className="text-5xl md:text-5xl font-extrabold text-[#c8e500] leading-tight mb-8"
@@ -500,13 +723,25 @@ export default function OpocExplainer() {
                   </p>
                 </div>
                 
-                <div>
-                  <h3 className="text-[#c8e500] text-xl font-semibold mb-3">Mathematical Security:</h3>
-                  <p className="text-white/70 leading-relaxed mb-4">
-                    The probability of selecting all malicious validators (assuming 1/3 of the network is malicious):
-                  </p>
-                  <ProbabilityFormula />
-                </div>
+                
+<div>
+  <h3 className="text-[#c8e500] text-xl font-semibold mb-3">Mathematical Security:</h3>
+  <p className="text-white/70 leading-relaxed mb-4">
+    OPoC's security scales exponentially with network size. As validator population V increases, 
+    the probability of selecting all Byzantine validators among the random subset v decreases 
+    exponentially, while maintaining constant computational effort. The hypergeometric distribution 
+    shows that with v/V = 3% and honest ratio H/V = 2/3:
+  </p>
+  <img src="/equation_opoc.svg" alt="Probability Formula" className="w-60 max-w-md mx-auto mb-4" />
+  <p className="text-white/60 text-sm mb-4 text-center">
+    Where V = total validators, v = selected validators, h = honest ratio
+  </p>
+  <p className="text-white/70 leading-relaxed">
+    This exponential security improvement enables the percentage of participating validators 
+    v/V required for consistent security to decrease polynomially as the network grows, 
+    providing superior scalability compared to PoS/PoW linear scaling.
+  </p>
+</div>
               </div>
               
               <NetworkDiagram />
@@ -587,7 +822,7 @@ export default function OpocExplainer() {
           {/* Spacer divs to enable scrolling */}
           <div className="w-full bg-transparent">
             {sections.map((_, i) => (
-              <div key={i} className="h-screen w-full" />
+              <div key={i} className="h-[60vh] w-full" />
             ))}
           </div>
         </div>
@@ -632,7 +867,7 @@ export default function OpocExplainer() {
                 
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#c8e500] text-black flex items-center justify-center mr-4 mt-1">4</div>
-                  <p>With just 100 validators and a $10,000 stake per validator, the economic security per computation can reach over $1 billion.</p>
+                  <p>With just 100 validators, 10 partecipants and a $10,000 stake per validator, the economic security per computation can reach over $1 billion.</p>
                 </div>
               </div>
               
@@ -670,6 +905,36 @@ export default function OpocExplainer() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </motion.div>
+
+       <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px 0px" }}
+        variants={fadeUpVariant}
+        className="py-24 px-6 md:px-24 bg-gradient-to-b from-black to-gray-900"
+      >
+        <div className="max-w-5xl mx-auto">
+          <AnimatedTitle
+            text="OPoC Security Calculator"
+            className="text-4xl md:text-6xl font-bold text-white mb-4"
+          />
+          <div className="h-1 w-24 bg-[#c8e500] mb-8"></div>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl text-white/70 leading-relaxed mb-12 max-w-3xl"
+          >
+            Explore how OPoC's economic security scales with your network parameters. 
+            Adjust the values below to see how stake amounts and validator distribution 
+            affect the minimum reward needed to make attacks financially viable.
+          </motion.p>
+          
+          <OPoCCalculator />
         </div>
       </motion.div>
       

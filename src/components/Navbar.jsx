@@ -27,13 +27,22 @@ export const BriefcaseIcon = () => (
 );
 
 export const PortalIcon = () => (
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M21 8V16C21 19.3137 18.3137 22 15 22H9C5.68629 22 3 19.3137 3 16V8C3 4.68629 5.68629 2 9 2H15C18.3137 2 21 4.68629 21 8Z" stroke="currentColor" strokeWidth="1.5" />
-  <path d="M9 16.5L15 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  <path d="M15 16.5L9 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  {/* Added subtle details */}
-  <path d="M21 8.5H3" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.4" />
-</svg>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main portal frame */}
+    <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    
+    {/* Code brackets representing development */}
+    <path d="M8 9L6 12L8 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16 9L18 12L16 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    
+    {/* Central connecting element */}
+    <path d="M10 10L14 14M14 10L10 14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    
+    {/* Top connection points */}
+    <circle cx="7" cy="4" r="1.5" fill="currentColor" />
+    <circle cx="12" cy="4" r="1.5" fill="currentColor" />
+    <circle cx="17" cy="4" r="1.5" fill="currentColor" />
+  </svg>
 );
 
 export const DocumentIcon = () => (
@@ -162,6 +171,36 @@ export const ChainIcon = () => (
     </svg>
   );
 
+  export const AIAgentIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main hexagonal structure - representing AI architecture */}
+    <path d="M12 3L19 7V17L12 21L5 17V7L12 3Z" 
+      stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    
+    {/* Central processing core */}
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    
+    {/* Data flow indicators - four directions */}
+    <path d="M12 6V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M12 15V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M6 12H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M15 12H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    
+    {/* Neural processing nodes */}
+    <circle cx="12" cy="12" r="1" fill="currentColor" />
+    <circle cx="9" cy="9" r="0.5" fill="currentColor" fillOpacity="0.7" />
+    <circle cx="15" cy="9" r="0.5" fill="currentColor" fillOpacity="0.7" />
+    <circle cx="9" cy="15" r="0.5" fill="currentColor" fillOpacity="0.7" />
+    <circle cx="15" cy="15" r="0.5" fill="currentColor" fillOpacity="0.7" />
+    
+    {/* Connection pathways */}
+    <path d="M10.5 10.5L9 9" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" />
+    <path d="M13.5 10.5L15 9" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" />
+    <path d="M10.5 13.5L9 15" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" />
+    <path d="M13.5 13.5L15 15" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" />
+  </svg>
+);
+
 
 const menuItems = {
   Ecosystem: {
@@ -170,11 +209,11 @@ const menuItems = {
         title: "Explore",
         items: [
           { icon: <AppIcon />, label: "Apps & Infrastructure", link: "/ecosystem" },
-        //   {
-        //     icon: <BriefcaseIcon />,
-        //     label: "Ecosystem Careers",
-        //     link: "/ecosystem/careers",
-        //   },
+          {
+            icon: <AIAgentIcon />,
+            label: "Agents",
+            link: "https://app.uomi.ai/agents",
+          },
         ],
       },
       {
@@ -205,6 +244,7 @@ const menuItems = {
         items: [
           { icon: <PortalIcon />, label: "Developer Portal", link: "/docs" },
           { icon: <DocumentIcon />, label: "Documentation", link: "https://docs.uomi.ai" },
+          { icon: <GithubIcon />, label: "GitHub", link: "https://github.com/uomi-network" },
         ],
       },
     ],

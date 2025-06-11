@@ -7,7 +7,7 @@ const ModernLottieComponent = () => {
     // Assume che 'image' sia un JSON di animazione Lottie
   
     return (
-      <div className="absolute top-0 right-0 w-48 h-48 overflow-hidden opacity-70 pointer-events-none">
+      <div className="absolute top-0 right-0 w-42 h-42 overflow-hidden opacity-70 pointer-events-none">
         <Lottie
           animationData={image}
           loop={true}

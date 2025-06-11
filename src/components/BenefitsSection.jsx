@@ -200,9 +200,8 @@ const BenefitsSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-2xl mx-auto text-center text-zinc-400 mb-16 text-lg leading-relaxed"
           >
-            UOMI Network enables fully autonomous AI agents to execute on-chain,
-            interact across chains, and evolve independently — all on a fast,
-            secure, and EVM-compatible Layer 1 blockchain.
+            UOMI enables you to build AI agents that own assets, execute logic on-chain, interact across ecosystems, and evolve over time, trustlessly, autonomously, and verifiably.
+
           </motion.p>
         </div>
 
@@ -250,7 +249,7 @@ const BenefitsSection = () => {
                   }}
                   onClick={() => window.open("/wasp", "_blank")}
                 >
-                  <span>Explore the Agent Framework</span>
+                  <span>BUILD YOUR AI AGENT ON UOMI</span>
                   <ArrowRight size={16} className="ml-2" />
                 </motion.button>
               </motion.div>

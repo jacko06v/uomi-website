@@ -171,7 +171,11 @@ const BlockchainFeatures = () =>  {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section header */}
-       < EnhancedTitles />
+       < EnhancedTitles
+        category = "Features"
+        title = "The AI-Native Blockchain Infrastructure"
+        titleBreak={true}
+        />
 
         {/* First row - 2 columns */}
         <motion.div
