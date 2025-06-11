@@ -236,6 +236,8 @@ const UomiGrants = () => {
                   boxShadow: "0 0 25px rgba(189, 248, 45, 0.4)"
                 }}
                 transition={{ duration: 0.3 }}
+                //on click go to https://docs.google.com/forms/d/1ynl_5yW9uuVfyJoSM7pIMMuMwMxcZn8UguLTjUe-e_g
+                onClick={() => window.open("https://docs.google.com/forms/d/1ynl_5yW9uuVfyJoSM7pIMMuMwMxcZn8UguLTjUe-e_g", "_blank")}
               >
                 Apply for a Grant
               </motion.button>
@@ -541,6 +543,7 @@ const UomiGrants = () => {
                   boxShadow: "0 0 25px rgba(189, 248, 45, 0.4)"
                 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => window.open("https://docs.google.com/forms/d/1ynl_5yW9uuVfyJoSM7pIMMuMwMxcZn8UguLTjUe-e_g", "_blank")}
               >
                 Apply for a Grant
               </motion.button>

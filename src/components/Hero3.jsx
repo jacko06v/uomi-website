@@ -80,7 +80,7 @@ const Hero3 = () => {
               whileHover={{ scale: 1.03, backgroundColor: "#c8e500" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              onClick={() => window.open("https://app.uomi.ai", "_blank")}
+              onClick={() => window.open("https://discord.gg/4ySAfR73VM", "_blank")}
             >
               <span>JOIN THE NETWORK</span>
             </motion.button>

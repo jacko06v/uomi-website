@@ -260,7 +260,7 @@ const menuItems = {
       },
     ],
     ctaBox: "Building a project on UOMI? Get in touch!",
-    ctaLink: "/ecosystem/contact",
+    ctaLink: "https://docs.google.com/forms/d/1ynl_5yW9uuVfyJoSM7pIMMuMwMxcZn8UguLTjUe-e_g",
   },
   Developers: {
     sections: [
