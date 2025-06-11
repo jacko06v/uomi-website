@@ -15,6 +15,38 @@ export const AppIcon = () => (
 </svg>
 );
 
+export const ManifestoIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main scroll/document */}
+    <path d="M6 3C4.89543 3 4 3.89543 4 5V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V5C20 3.89543 19.1046 3 18 3H6Z" 
+      stroke="currentColor" strokeWidth="1.5" />
+    
+    {/* Title section - manifesto header */}
+    <path d="M7 7H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M7 9H14" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.7" />
+    
+    {/* Key principles/points */}
+    <circle cx="8" cy="12" r="1" fill="currentColor" />
+    <path d="M10 12H16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    
+    <circle cx="8" cy="15" r="1" fill="currentColor" />
+    <path d="M10 15H16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    
+    <circle cx="8" cy="18" r="1" fill="currentColor" />
+    <path d="M10 18H14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    
+    {/* Revolutionary/visionary element - subtle star */}
+    <path d="M16.5 6L17 4.5L18.5 5L17 5.5L16.5 6Z" 
+      stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.6" strokeLinejoin="round" />
+    
+    {/* Scroll edge detail */}
+    <path d="M6 3C6 3 5.5 2.5 5 3C4.5 3.5 5 4 5 4" 
+      stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round" />
+    <path d="M18 3C18 3 18.5 2.5 19 3C19.5 3.5 19 4 19 4" 
+      stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" strokeLinecap="round" />
+  </svg>
+);
+
 export const BriefcaseIcon = () => (
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
@@ -295,6 +327,7 @@ const menuItems = {
           { icon: <RoadmapIcon />, label: "Roadmap", link: "/roadmap" },
           { icon: <BlogIcon />, label: "Blog", link: "/blog" },
           { icon: <UseCasesIcon />, label: "Examples", link: "/applications" },
+          { icon: <BriefcaseIcon />, label: "Manifesto", link: "/manifesto" },
         ],
       },
       {
