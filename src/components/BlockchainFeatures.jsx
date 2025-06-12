@@ -358,7 +358,7 @@ const BlockchainFeatures = () =>  {
                 style={{ backgroundColor: "rgba(223, 254, 0, 0.3)" }}
               ></div>
               <p className="text-zinc-400 text-sm font-medium mb-1">
-                Multi-Chain TSS - Trustless Multi-Chain Transaction Signing
+                TSS - Trustless Multi-Chain Transaction Signing
               </p>
               <p className="text-zinc-300 text-base">
                 Threshold Signatures Schemes enable AI Agents to sign transactions on any chain with no intermediaries.
