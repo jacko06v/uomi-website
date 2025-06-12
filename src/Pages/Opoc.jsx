@@ -887,7 +887,7 @@ export default function OpocExplainer() {
                 <h3 className="text-xl font-semibold text-[#c8e500] mb-4">Economic Security</h3>
                 <StatCounter 
                   value={1315} 
-                  label="Million Dollar Security per Computation" 
+                  label="Billion Dollar Security per Computation" 
                   symbol="M" 
                   duration={3000} 
                 />
@@ -1165,12 +1165,19 @@ export default function OpocExplainer() {
           <p className="text-xl text-white/70 leading-relaxed max-w-3xl mx-auto mb-12">
             OPoC brings mathematical guarantees and economic alignment to large AI model inference, enabling a new generation of decentralized AI applications.
           </p>
+          <div className="flex justify-center space-x-4 mb-8">
           
           <button className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg"
             onClick={() => window.location.href = "https://uomi.ai/consensus"}
           >
             Explore OPoC Paper
           </button>
+          <button className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg"
+            onClick={() => window.location.href = "https://uomi.ai/deterministc-indeterminism"}
+          >
+            Explore Deterministic Undeterminism
+          </button>
+          </div>
           
           <motion.div
             initial={{ opacity: 0 }}
