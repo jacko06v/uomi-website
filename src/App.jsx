@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom'; // Rimuovi BrowserRouter da qui
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./Pages/Home";
@@ -23,7 +23,7 @@ import ReactGA from 'react-ga4';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const location = useLocation();
+  const location = useLocation(); // Ora funziona perché siamo dentro il Router
 
   useEffect(() => {
     ReactGA.send({ 
@@ -32,40 +32,31 @@ function App() {
     });
   }, [location]);
 
-  
   return (
-    <Router>
-      <div className={`min-h-screen bg-black text-white`}>
-        <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-        
-        <Routes>
-          <Route path="*" element={<Page404 />} />
-          <Route path="/" element={<HomePage isDarkMode={isDarkMode} />} />
-          <Route path="/ecosystem" element={<EcosystemPage />} />
-          <Route path="/wasp" element={<WaspPage />} />
-          <Route path="/whitepaper" element={<WhitepaperPage />} />
-          <Route path="/consensus" element={<ConsensusPage />} />
-          <Route path="/opoc" element={<OPoCPresentation />} />
-          <Route path="/docs" element={<Docs />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:postId" element={<BlogPost />} />
-          <Route path="/deterministc-indeterminism" element={<Determinism />} />
-          <Route path="/roadmap" element={<Roadmap />} />
-          <Route path="/grants" element={<Grants />} />
-          <Route path="/applications" element={<Applications />} />
-          <Route path="/manifesto" element={<Manifesto />} />
-
-
-
-        </Routes>
-        
-        
-        <Footer isDarkMode={isDarkMode} />
-      </div>
-    </Router>
+    <div className={`min-h-screen bg-black text-white`}>
+      <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+      
+      <Routes>
+        <Route path="*" element={<Page404 />} />
+        <Route path="/" element={<HomePage isDarkMode={isDarkMode} />} />
+        <Route path="/ecosystem" element={<EcosystemPage />} />
+        <Route path="/wasp" element={<WaspPage />} />
+        <Route path="/whitepaper" element={<WhitepaperPage />} />
+        <Route path="/consensus" element={<ConsensusPage />} />
+        <Route path="/opoc" element={<OPoCPresentation />} />
+        <Route path="/docs" element={<Docs />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:postId" element={<BlogPost />} />
+        <Route path="/deterministc-indeterminism" element={<Determinism />} />
+        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/grants" element={<Grants />} />
+        <Route path="/applications" element={<Applications />} />
+        <Route path="/manifesto" element={<Manifesto />} />
+      </Routes>
+      
+      <Footer isDarkMode={isDarkMode} />
+    </div>
   );
 }
 
 export default App;
-
-
