@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Globe,
   Search,
-  Twitter,
   Loader2,
   AlertCircle,
   Plus,
@@ -12,6 +11,7 @@ import {
   Tag as TagIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { XIcon } from "./Navbar";
 
 const EcosystemSection = () => {
   // State management
@@ -479,7 +479,7 @@ const EcosystemSection = () => {
                             className="bg-black bg-opacity-70 text-white p-1 rounded-md hover:bg-[#dffe00] hover:text-black transition-all"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <Twitter className="w-4 h-4" />
+                            <XIcon className="w-4 h-4" />
                           </a>
                         )}
                         {project.websiteLink && project.websiteLink.trim() && project.websiteLink != '#' && project.websiteLink != '' && (
@@ -650,7 +650,7 @@ const EcosystemSection = () => {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-all"
                       >
-                        <Twitter className="w-4 h-4" />
+                        <XIcon className="w-4 h-4" />
                         Follow
                       </a>
                     )}
