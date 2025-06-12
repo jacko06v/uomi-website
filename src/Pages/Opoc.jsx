@@ -351,56 +351,122 @@ const ComparisonTable = () => {
       } 
     })
   };
+
+  const data = [
+    {
+      approach: "Traditional PoW/PoS",
+      verification: "Full network verification",
+      scaling: "Cost increases linearly with Nodes count",
+      security: "Consensus-based",
+      verificationColor: "text-red-400",
+      scalingColor: "text-red-400"
+    },
+    {
+      approach: "ZK Proofs",
+      verification: "Low verification, high proving",
+      scaling: "Limited by prover capacity, 1000x Overhead",
+      security: "Cryptographic guarantees",
+      verificationColor: "text-yellow-400",
+      scalingColor: "text-yellow-400"
+    },
+    {
+      approach: "OPoC",
+      verification: "Subset verification",
+      scaling: "Linear with validators",
+      security: "Economic + Probabilistic",
+      verificationColor: "text-green-400",
+      scalingColor: "text-green-400",
+      highlight: true
+    }
+  ];
   
   return (
-    <div ref={tableRef} className="w-full overflow-x-auto mt-12 mb-16">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-white/10">
-            <th className="text-left p-4 text-white/60">Approach</th>
-            <th className="text-left p-4 text-white/60">Verification Cost</th>
-            <th className="text-left p-4 text-white/60">Scaling</th>
-            <th className="text-left p-4 text-white/60">Security</th>
-          </tr>
-        </thead>
-        <tbody>
-          <motion.tr 
-            custom={0}
+    <div ref={tableRef} className="w-full mt-12 mb-16">
+      {/* Desktop Table */}
+      <div className="hidden lg:block overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="border-b border-white/10">
+              <th className="text-left p-4 text-white/60">Approach</th>
+              <th className="text-left p-4 text-white/60">Verification Cost</th>
+              <th className="text-left p-4 text-white/60">Scaling</th>
+              <th className="text-left p-4 text-white/60">Security</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, index) => (
+              <motion.tr 
+                key={index}
+                custom={index}
+                variants={rowVariants}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="border-b border-white/10"
+              >
+                <td className={`p-4 ${row.highlight ? 'text-[#c8e500] font-bold' : ''}`}>
+                  {row.approach}
+                </td>
+                <td className={`p-4 ${row.verificationColor}`}>
+                  {row.verification}
+                </td>
+                <td className={`p-4 ${row.scalingColor}`}>
+                  {row.scaling}
+                </td>
+                <td className="p-4">
+                  {row.security}
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="lg:hidden space-y-4">
+        {data.map((row, index) => (
+          <motion.div
+            key={index}
+            custom={index}
             variants={rowVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="border-b border-white/10"
+            className={`p-4 rounded-lg border ${
+              row.highlight 
+                ? 'border-[#c8e500]/20 bg-[#c8e500]/5' 
+                : 'border-white/10 bg-white/5'
+            }`}
           >
-            <td className="p-4">Traditional PoW/PoS</td>
-            <td className="p-4 text-red-400">Full network verification</td>
-            <td className="p-4 text-red-400">Cost increases linearly with Nodes count</td>
-            <td className="p-4">Consensus-based</td>
-          </motion.tr>
-          <motion.tr 
-            custom={1}
-            variants={rowVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="border-b border-white/10"
-          >
-            <td className="p-4">ZK Proofs</td>
-            <td className="p-4 text-yellow-400">Low verification, high proving</td>
-            <td className="p-4 text-yellow-400">Limited by prover capacity, 1000x Overhead</td>
-            <td className="p-4">Cryptographic guarantees</td>
-          </motion.tr>
-          <motion.tr 
-            custom={2}
-            variants={rowVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            <td className="p-4 text-[#c8e500] font-bold">OPoC</td>
-            <td className="p-4 text-green-400">Subset verification</td>
-            <td className="p-4 text-green-400">Linear with validators</td>
-            <td className="p-4">Economic + Probabilistic</td>
-          </motion.tr>
-        </tbody>
-      </table>
+            <div className={`font-bold mb-3 text-lg ${
+              row.highlight ? 'text-[#c8e500]' : 'text-white'
+            }`}>
+              {row.approach}
+            </div>
+            
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-white/60">Verification: </span>
+                <span className={row.verificationColor}>
+                  {row.verification}
+                </span>
+              </div>
+              
+              <div>
+                <span className="text-white/60">Scaling: </span>
+                <span className={row.scalingColor}>
+                  {row.scaling}
+                </span>
+              </div>
+              
+              <div>
+                <span className="text-white/60">Security: </span>
+                <span className="text-white">
+                  {row.security}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -1127,13 +1193,13 @@ export default function OpocExplainer() {
         className="rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-6 py-3 sm:px-8 sm:py-4 text-black font-bold text-base sm:text-lg whitespace-nowrap"
         onClick={() => window.location.href = "https://uomi.ai/consensus"}
       >
-        Explore OPoC Paper
+       OPoC Paper
       </button>
       <button 
         className="rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-6 py-3 sm:px-8 sm:py-4 text-black font-bold text-base sm:text-lg whitespace-nowrap"
         onClick={() => window.location.href = "https://uomi.ai/deterministc-indeterminism"}
       >
-        Explore Deterministic Undeterminism
+        Deterministic Undeterminism Paper
       </button>
     </div>
     
