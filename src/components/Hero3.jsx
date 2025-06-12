@@ -80,9 +80,9 @@ const Hero3 = () => {
               whileHover={{ scale: 1.03, backgroundColor: "#c8e500" }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              onClick={() => window.open("https://discord.gg/4ySAfR73VM", "_blank")}
+              onClick={() => window.open("./docs", "_blank")}
             >
-              <span>JOIN THE NETWORK</span>
+              <span>START BUILDING</span>
             </motion.button>
 
             <motion.button
@@ -94,9 +94,9 @@ const Hero3 = () => {
               }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              onClick={() => window.open("./docs", "_blank")}
+               onClick={() => window.open("https://discord.gg/4ySAfR73VM", "_blank")}
             >
-              <span>START BUILDING</span>
+              <span>JOIN THE COMMUNITY</span>
             </motion.button>
           </motion.div>
         </motion.div>
