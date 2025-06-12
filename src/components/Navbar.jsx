@@ -323,11 +323,11 @@ const menuItems = {
       {
         title: "About",
         items: [
+          { icon: <BriefcaseIcon />, label: "Manifesto", link: "/manifesto" },
           { icon: <ChainIcon />, label: "OPoC", link: "/opoc" },
           { icon: <RoadmapIcon />, label: "Roadmap", link: "/roadmap" },
           { icon: <BlogIcon />, label: "Blog", link: "/blog" },
-          { icon: <UseCasesIcon />, label: "Examples", link: "/applications" },
-          { icon: <BriefcaseIcon />, label: "Manifesto", link: "/manifesto" },
+          { icon: <UseCasesIcon />, label: "Applications", link: "/applications" },
         ],
       },
       {
