@@ -211,27 +211,32 @@ const DetailPanel = ({ useCase }) => {
 };
 
 const AnimatedTitle = ({ text, className }) => {
-  const characters = text.split('');
+  const words = text.split(' ');
   
   return (
-    <h1 className={className}>
-      {characters.map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ 
-            duration: Math.random() * 0.8 + 0.4,
-            delay: Math.random() * 1.2,
-            ease: "easeOut" 
-          }}
-          viewport={{ once: true }}
-          className="inline-block"
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
+    <h3 className={className}>
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block">
+          {word.split('').map((char, charIndex) => (
+            <motion.span
+              key={charIndex}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ 
+                duration: Math.random() * 0.8 + 0.4,
+                delay: Math.random() * 1.2,
+                ease: "easeOut" 
+              }}
+              viewport={{ once: true }}
+              className="inline-block font-sx"
+            >
+              {char}
+            </motion.span>
+          ))}
+          {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
+        </span>
       ))}
-    </h1>
+    </h3>
   );
 };
 
@@ -239,15 +244,35 @@ export default function UseCasesShowcase() {
   const { scrollY } = useScroll();
   const [selectedUseCase, setSelectedUseCase] = useState(useCases[0]);
   const heroRef = useRef(null);
+  const detailsRef = useRef(null); // Ref per la sezione dei dettagli
   
-  // Parallax effects
-  const titleY = useTransform(scrollY, [0, 500], [0, 100]);
-  const subtitleY = useTransform(scrollY, [0, 500], [0, 50]);
-  const opacityTransform = useTransform(scrollY, [0, 300], [1, 0]);
+  // Parallax effects con range più ampio
+  const titleY = useTransform(scrollY, [0, 600], [0, 100]);
+  const subtitleY = useTransform(scrollY, [0, 600], [0, 50]);
+  const opacityTransform = useTransform(scrollY, [0, 600], [1, 0]);
   
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
+
+  // Funzione per gestire la selezione e lo scroll
+  const handleUseCaseSelection = (useCase) => {
+    setSelectedUseCase(useCase);
+    
+    // Scroll ai dettagli con un piccolo delay per permettere l'animazione
+    setTimeout(() => {
+      if (detailsRef.current) {
+        const yOffset = -50; // Spazio sopra (in pixel)
+        const element = detailsRef.current;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -336,13 +361,13 @@ export default function UseCasesShowcase() {
                 useCase={useCase}
                 index={index}
                 isActive={selectedUseCase?.title === useCase.title}
-                onClick={() => setSelectedUseCase(useCase)}
+                onClick={() => handleUseCaseSelection(useCase)}
               />
             ))}
           </div>
           
           {/* Detail Panel - Fixed Position */}
-          <div className="mt-8">
+          <div ref={detailsRef} className="mt-8">
             <AnimatePresence mode="wait">
               <DetailPanel useCase={selectedUseCase} />
             </AnimatePresence>

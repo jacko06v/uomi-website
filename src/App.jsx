@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./Pages/Home";
@@ -19,9 +19,19 @@ import Roadmap from './Pages/Roadmap';
 import Grants from './Pages/Grants';
 import Applications from './Pages/Applications';
 import Manifesto from './Pages/Manifesto';
+import ReactGA from 'react-ga4';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ 
+      hitType: "pageview", 
+      page: location.pathname + location.search 
+    });
+  }, [location]);
+
   
   return (
     <Router>

@@ -257,8 +257,6 @@ export const ChainIcon = () => (
     <path d="M13.5 13.5L15 15" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.5" />
   </svg>
 );
-
-
 const menuItems = {
   Ecosystem: {
     sections: [
@@ -351,6 +349,11 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Helper function to detect external links
+  const isExternalLink = (url) => {
+    return url && (url.startsWith('http://') || url.startsWith('https://'));
+  };
+
   // Initialize dark mode from system preference
   useEffect(() => {
     setIsDarkMode(true); // Default to dark mode
@@ -385,7 +388,8 @@ const Navbar = () => {
   // Styles based on theme
   const themeStyles = {
     bg: "bg-black",
-    text: "text-white",
+    //text should never break, no new lines
+    text: "text-white whitespace-nowrap break-keep",
     textSecondary: "text-gray-300",
     border: "border-zinc-800",
     dropdown: "bg-zinc-900 border-zinc-800",
@@ -468,6 +472,10 @@ const Navbar = () => {
                                         <a
                                           href={item.link}
                                           className="flex items-start gap-2.5 group cursor-pointer"
+                                          {...(isExternalLink(item.link) && { 
+                                            target: '_blank', 
+                                            rel: 'noopener noreferrer' 
+                                          })}
                                         >
                                           <span className="text-lg">
                                             {item.icon}
@@ -494,6 +502,10 @@ const Navbar = () => {
                                 <a
                                   href={menuItems[menuName].ctaLink}
                                   className="hover:text-[#dffe00]"
+                                  {...(isExternalLink(menuItems[menuName].ctaLink) && { 
+                                    target: '_blank', 
+                                    rel: 'noopener noreferrer' 
+                                  })}
                                 >
                                   {menuItems[menuName].ctaBox}
                                 </a>
@@ -515,7 +527,14 @@ const Navbar = () => {
                                         className="group cursor-pointer"
                                         whileHover={{ x: 3 }}
                                       >
-                                        <a href={item.link} className="block">
+                                        <a 
+                                          href={item.link} 
+                                          className="block"
+                                          {...(isExternalLink(item.link) && { 
+                                            target: '_blank', 
+                                            rel: 'noopener noreferrer' 
+                                          })}
+                                        >
                                           <div className="flex items-center gap-2">
                                             <div
                                               className={`${themeStyles.text} font-medium group-hover:text-[#dffe00]`}
@@ -563,6 +582,10 @@ const Navbar = () => {
                                           <a
                                             href={item.link}
                                             className="flex items-start gap-2.5"
+                                            {...(isExternalLink(item.link) && { 
+                                              target: '_blank', 
+                                              rel: 'noopener noreferrer' 
+                                            })}
                                           >
                                             {item.icon && (
                                               <span className="text-lg">
@@ -593,6 +616,10 @@ const Navbar = () => {
                                       <a
                                         href={section.link}
                                         className="block hover:text-[#dffe00]"
+                                        {...(isExternalLink(section.link) && { 
+                                          target: '_blank', 
+                                          rel: 'noopener noreferrer' 
+                                        })}
                                       >
                                         <p
                                           className={`text-sm ${themeStyles.textSecondary}`}
@@ -620,12 +647,13 @@ const Navbar = () => {
               <motion.a
                 href="https://app.uomi.ai/"
                 className="hidden sm:block bg-[#dffe00] text-black px-5 py-2 rounded-full font-semibold shadow-md"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{
                   scale: 1.05,
                   backgroundColor: "#c8e500",
                 }}
                 whileTap={{ scale: 0.95 }}
-
               >
                 Join Testnet
               </motion.a>
@@ -695,6 +723,10 @@ const Navbar = () => {
                                       <a
                                         href={item.link}
                                         className="flex gap-2.5 items-start hover:text-[#dffe00]"
+                                        {...(isExternalLink(item.link) && { 
+                                          target: '_blank', 
+                                          rel: 'noopener noreferrer' 
+                                        })}
                                       >
                                         {item.icon && (
                                           <span className="text-lg">
@@ -726,6 +758,10 @@ const Navbar = () => {
                                   <a
                                     href={section.link}
                                     className="block hover:text-[#dffe00]"
+                                    {...(isExternalLink(section.link) && { 
+                                      target: '_blank', 
+                                      rel: 'noopener noreferrer' 
+                                    })}
                                   >
                                     <p
                                       className={`text-sm ${themeStyles.textSecondary}`}
@@ -746,6 +782,10 @@ const Navbar = () => {
                                 <a
                                   href={menuItems[menuName].ctaLink}
                                   className="block hover:text-[#dffe00]"
+                                  {...(isExternalLink(menuItems[menuName].ctaLink) && { 
+                                    target: '_blank', 
+                                    rel: 'noopener noreferrer' 
+                                  })}
                                 >
                                   {menuItems[menuName].ctaBox}
                                 </a>
@@ -760,8 +800,10 @@ const Navbar = () => {
                 {/* Mobile CTA Button */}
                 <div className="py-4">
                   <motion.a
-                    href="/testnet"
+                    href="https://app.uomi.ai/"
                     className="block w-full text-center bg-[#dffe00] text-black py-2.5 rounded-full font-semibold"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileTap={{ scale: 0.95 }}
                   >
                     Join Testnet

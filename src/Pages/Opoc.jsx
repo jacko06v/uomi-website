@@ -407,65 +407,18 @@ const ComparisonTable = () => {
 
 const NetworkDiagram = () => {
   return (
-    <svg viewBox="0 0 400 200" className="w-full max-w-lg mx-auto my-8">
-      {/* Network nodes */}
-      {Array.from({ length: 20 }).map((_, i) => {
-        const angle = (i / 20) * Math.PI * 2;
-        const radius = 80;
-        const x = 200 + radius * Math.cos(angle);
-        const y = 100 + radius * Math.sin(angle);
-        
-        return (
-          <motion.circle 
-            key={i}
-            cx={x}
-            cy={y}
-            r={i < 3 ? 8 : 4}
-            fill={i < 3 ? "#c8e500" : "rgba(255,255,255,0.3)"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: i * 0.05, duration: 0.5 }}
-          />
-        );
-      })}
-      
-      {/* Connections between selected validators */}
-      <motion.path 
-        d="M 248 48 L 201 172 M 201 172 L 152 47 M 152 47 L 248 48" 
-        stroke="#c8e500" 
-        strokeWidth="1.5"
-        fill="none"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 0.8 }}
-        transition={{ duration: 1.5, delay: 1 }}
+   //immagine a /assets/img3.png
+    <div className="w-full">
+      <motion.img 
+        src="/assets/img3.png" 
+        alt="OPoC Network Diagram"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px 0px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full rounded-2xl shadow-lg"
       />
-      
-      {/* Central computation node */}
-      <motion.circle 
-        cx="200" 
-        cy="100" 
-        r="15" 
-        fill="rgba(200,229,0,0.2)" 
-        stroke="#c8e500"
-        strokeWidth="2"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", delay: 0.5 }}
-      />
-      
-      <motion.text 
-        x="200" 
-        y="210" 
-        textAnchor="middle" 
-        fill="white" 
-        fontSize="12"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ delay: 1.5 }}
-      >
-        Randomly selected validators (highlighted)
-      </motion.text>
-    </svg>
+    </div>
   );
 };
 
@@ -478,9 +431,9 @@ export default function OpocExplainer() {
     const stickyContainerRef = useRef(null);
     
     // Parallax effect for hero section
-    const titleY = useTransform(scrollY, [0, 500], [0, 100]);
-    const subtitleY = useTransform(scrollY, [0, 500], [0, 50]);
-    const opacityTransform = useTransform(scrollY, [0, 300], [1, 0]);
+    const titleY = useTransform(scrollY, [0, 600], [0, 100]);
+    const subtitleY = useTransform(scrollY, [0, 600], [0, 50]);
+    const opacityTransform = useTransform(scrollY, [0, 600], [1, 0]);
     
     // Scroll indicator animation
     const scrollArrowY = useTransform(
@@ -565,31 +518,34 @@ export default function OpocExplainer() {
   
   // Animated title with random character reveals
   const AnimatedTitle = ({ text, className }) => {
-    // Split the text into individual characters
-    const characters = text.split('');
-    
-    return (
-      <h3 className={className}>
-        {characters.map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            // Random delay between 0 and 2 seconds for each character
-            transition={{ 
-              duration: Math.random() * 0.8 + 0.4, // Duration between 0.4s and 1.2s
-              delay: Math.random() * 1.2,  // Delay between 0s and 1.2s
-              ease: "easeOut" 
-            }}
-            viewport={{ once: true }}
-            className="inline-block font-sx"
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
-      </h3>
-    );
-  };
+  const words = text.split(' ');
+  
+  return (
+    <h3 className={className}>
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block">
+          {word.split('').map((char, charIndex) => (
+            <motion.span
+              key={charIndex}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ 
+                duration: Math.random() * 0.8 + 0.4,
+                delay: Math.random() * 1.2,
+                ease: "easeOut" 
+              }}
+              viewport={{ once: true }}
+              className="inline-block font-sx"
+            >
+              {char}
+            </motion.span>
+          ))}
+          {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
+        </span>
+      ))}
+    </h3>
+  );
+};
   
     return (
       <div ref={containerRef} className="bg-black text-white min-h-screen w-full font-sans">
@@ -1149,47 +1105,49 @@ export default function OpocExplainer() {
      
       
       {/* Footer / Call to Action */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUpVariant}
-        className="py-24 px-6 md:px-24 bg-black border-t border-white/10"
+     <motion.div 
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={fadeUpVariant}
+  className="py-24 px-6 md:px-24 bg-black border-t border-white/10"
+>
+  <div className="max-w-5xl mx-auto text-center">
+    <AnimatedTitle
+      text="The Future of Decentralized AI"
+      className="text-3xl md:text-5xl font-bold text-[#c8e500] mb-8"
+    />
+    
+    <p className="text-xl text-white/70 leading-relaxed max-w-3xl mx-auto mb-12">
+      OPoC brings mathematical guarantees and economic alignment to large AI model inference, enabling a new generation of decentralized AI applications.
+    </p>
+    
+    <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8 max-w-2xl mx-auto">
+      <button 
+        className="rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-6 py-3 sm:px-8 sm:py-4 text-black font-bold text-base sm:text-lg whitespace-nowrap"
+        onClick={() => window.location.href = "https://uomi.ai/consensus"}
       >
-        <div className="max-w-5xl mx-auto text-center">
-          <AnimatedTitle
-            text="The Future of Decentralized AI"
-            className="text-3xl md:text-5xl font-bold text-[#c8e500] mb-8"
-          />
-          
-          <p className="text-xl text-white/70 leading-relaxed max-w-3xl mx-auto mb-12">
-            OPoC brings mathematical guarantees and economic alignment to large AI model inference, enabling a new generation of decentralized AI applications.
-          </p>
-          <div className="flex justify-center space-x-4 mb-8">
-          
-          <button className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg"
-            onClick={() => window.location.href = "https://uomi.ai/consensus"}
-          >
-            Explore OPoC Paper
-          </button>
-          <button className="inline-block rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-8 py-4 text-black font-bold text-lg"
-            onClick={() => window.location.href = "https://uomi.ai/deterministc-indeterminism"}
-          >
-            Explore Deterministic Undeterminism
-          </button>
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-16 text-white/30 text-sm"
-          >
-            Building the foundation for trustless and efficient AI computation on decentralized networks
-          </motion.div>
-        </div>
-      </motion.div>
+        Explore OPoC Paper
+      </button>
+      <button 
+        className="rounded-full bg-gradient-to-r from-[#c8e500] to-[#a9c000] px-6 py-3 sm:px-8 sm:py-4 text-black font-bold text-base sm:text-lg whitespace-nowrap"
+        onClick={() => window.location.href = "https://uomi.ai/deterministc-indeterminism"}
+      >
+        Explore Deterministic Undeterminism
+      </button>
+    </div>
+    
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.5 }}
+      className="mt-16 text-white/30 text-sm"
+    >
+      Building the foundation for trustless and efficient AI computation on decentralized networks
+    </motion.div>
+  </div>
+</motion.div>
     </div>
     );
     }

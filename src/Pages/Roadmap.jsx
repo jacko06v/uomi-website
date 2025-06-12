@@ -30,27 +30,30 @@ const OpocRoadmap = () => {
 
 
   const AnimatedTitle = ({ text, className }) => {
-    // Split the text into individual characters
-    const characters = text.split('');
+    const words = text.split(' ');
     
     return (
       <h3 className={className}>
-        {characters.map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            // Random delay between 0 and 2 seconds for each character
-            transition={{ 
-              duration: Math.random() * 0.8 + 0.4, // Duration between 0.4s and 1.2s
-              delay: Math.random() * 1.2,  // Delay between 0s and 1.2s
-              ease: "easeOut" 
-            }}
-            viewport={{ once: true }}
-            className="inline-block font-sx"
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
+        {words.map((word, wordIndex) => (
+          <span key={wordIndex} className="inline-block">
+            {word.split('').map((char, charIndex) => (
+              <motion.span
+                key={charIndex}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ 
+                  duration: Math.random() * 0.8 + 0.4,
+                  delay: Math.random() * 1.2,
+                  ease: "easeOut" 
+                }}
+                viewport={{ once: true }}
+                className="inline-block font-sx"
+              >
+                {char}
+              </motion.span>
+            ))}
+            {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
+          </span>
         ))}
       </h3>
     );
